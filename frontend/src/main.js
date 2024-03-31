@@ -5,11 +5,13 @@ import Login from "./views/Login";
 import "./assets/vendor/nucleo/css/nucleo.css";
 import "./assets/vendor/font-awesome/css/font-awesome.min.css";
 import "./assets/css/argon-design-system-react.css";
+import Home from "./views/Home";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
     <Routes>
-      <Route path="/" exact element={<Login />} />
+      <Route path="/" exact element={<Home />} />
+      <Route path="/login" exact element={<Login />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   </BrowserRouter>
