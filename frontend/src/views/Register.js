@@ -19,31 +19,32 @@ import googleSvg from "../assets/img/icons/common/google.svg";
 import { API_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
 
-export default function Login() {
+export default () => {
+  let [name, setName] = useState("Dang ne");
+  let [email, setEmail] = useState("dang@123");
+  let [password, setPassword] = useState("123");
   const navigate = useNavigate();
-  const [email, setEmail] = useState("dang@123");
-  const [password, setPassword] = useState("123");
-
-  const handleForm = (e) => {
+  const handleRegister = (e) => {
     e.preventDefault();
-    fetch(`${API_URL}/login`, {
+    fetch(`${API_URL}/register`, {
       method: "POST",
       headers: {
         "content-type": "application/json",
       },
-      body: JSON.stringify({ email, password }),
+      body: JSON.stringify({ name, email, password }),
     })
       .then((res) => res.json())
-      .then(({ auth }) => {
-        if (auth) {
-          navigate("/");
+      .then((rs) => {
+        const { status } = rs;
+        if (status) {
+          navigate("/login");
         } else {
-          alert("account does not exist!");
+          if (rs.code === 1) alert("duplicate");
+          else alert("idk");
         }
-      });
-    console.log(email, password);
+      })
+      .catch((e) => console.log(e));
   };
-
   return (
     <>
       <section className="section section-shaped section-lg">
@@ -63,11 +64,11 @@ export default function Login() {
               <Card className="bg-secondary shadow border-0">
                 <CardHeader className="bg-white pb-5">
                   <div className="text-muted text-center mb-3">
-                    <small>Sign in with</small>
+                    <small>Sign up with</small>
                   </div>
-                  <div className="btn-wrapper text-center">
+                  <div className="text-center">
                     <Button
-                      className="btn-neutral btn-icon"
+                      className="btn-neutral btn-icon mr-4"
                       color="default"
                       href="#pablo"
                       onClick={(e) => e.preventDefault()}
@@ -92,11 +93,26 @@ export default function Login() {
                 </CardHeader>
                 <CardBody className="px-lg-5 py-lg-5">
                   <div className="text-center text-muted mb-4">
-                    <small>Or sign in with credentials</small>
+                    <small>Or sign up with credentials</small>
                   </div>
-                  <Form role="form" onSubmit={handleForm}>
-                    <FormGroup className="mb-3">
-                      <InputGroup className="input-group-alternative">
+                  <Form role="form" onSubmit={handleRegister}>
+                    <FormGroup>
+                      <InputGroup className="input-group-alternative mb-3">
+                        <InputGroupAddon addonType="prepend">
+                          <InputGroupText>
+                            <i className="ni ni-hat-3" />
+                          </InputGroupText>
+                        </InputGroupAddon>
+                        <Input
+                          placeholder="Name"
+                          type="text"
+                          value={name}
+                          onChange={(e) => setName(e.target.value)}
+                        />
+                      </InputGroup>
+                    </FormGroup>
+                    <FormGroup>
+                      <InputGroup className="input-group-alternative mb-3">
                         <InputGroupAddon addonType="prepend">
                           <InputGroupText>
                             <i className="ni ni-email-83" />
@@ -126,47 +142,51 @@ export default function Login() {
                         />
                       </InputGroup>
                     </FormGroup>
-                    <div className="custom-control custom-control-alternative custom-checkbox">
-                      <input
-                        className="custom-control-input"
-                        id=" customCheckLogin"
-                        type="checkbox"
-                      />
-                      <label
-                        className="custom-control-label"
-                        htmlFor=" customCheckLogin"
-                      >
-                        <span>Remember me</span>
-                      </label>
+                    <div className="text-muted font-italic">
+                      <small>
+                        password strength:{" "}
+                        <span className="text-success font-weight-700">
+                          strong
+                        </span>
+                      </small>
                     </div>
+                    <Row className="my-4">
+                      <Col xs="12">
+                        <div className="custom-control custom-control-alternative custom-checkbox">
+                          <input
+                            className="custom-control-input"
+                            id="customCheckRegister"
+                            type="checkbox"
+                          />
+                          <label
+                            className="custom-control-label"
+                            htmlFor="customCheckRegister"
+                          >
+                            <span>
+                              I agree with the{" "}
+                              <a
+                                href="#pablo"
+                                onClick={(e) => e.preventDefault()}
+                              >
+                                Privacy Policy
+                              </a>
+                            </span>
+                          </label>
+                        </div>
+                      </Col>
+                    </Row>
                     <div className="text-center">
-                      <Button className="my-4" color="primary" type="submit">
-                        Sign in
+                      <Button className="mt-4" color="primary" type="submit">
+                        Create account
                       </Button>
                     </div>
                   </Form>
                 </CardBody>
               </Card>
-              <Row className="mt-3">
-                <Col xs="6">
-                  <a
-                    className="text-light"
-                    href="#pablo"
-                    onClick={(e) => e.preventDefault()}
-                  >
-                    <small>Forgot password?</small>
-                  </a>
-                </Col>
-                <Col className="text-right" xs="6">
-                  <a className="text-light" href="/register">
-                    <small>Create new account</small>
-                  </a>
-                </Col>
-              </Row>
             </Col>
           </Row>
         </Container>
       </section>
     </>
   );
-}
+};

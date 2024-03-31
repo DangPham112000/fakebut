@@ -3,6 +3,7 @@ import express from "express";
 import cors from "cors";
 import login from "./routes/login.js";
 import home from "./routes/home.js";
+import register from "./routes/register.js";
 
 const app = express();
 
@@ -15,6 +16,7 @@ app.use((err, _req, res, next) => {
 });
 
 app.use("/login", login);
+app.use("/register", register);
 app.use("/", home);
 
 app.listen(+process.env.PORT, () => {
