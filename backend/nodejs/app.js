@@ -4,20 +4,40 @@ import cors from "cors";
 import login from "./routes/login.js";
 import home from "./routes/home.js";
 import register from "./routes/register.js";
+import session from "express-session";
+import redisStore from "./db/redis.js";
+import error from "./middleware/error.js";
+import authen from "./middleware/authen.js";
+import logout from "./routes/logout.js";
 
 const app = express();
 
-app.use(cors());
 app.use(express.json());
+app.use(
+  cors({
+    origin: "http://localhost:5173",
+    credentials: true,
+    methods: ["GET", "POST"],
+    allowedHeaders: ["Content-Type"],
+  })
+);
+app.use(
+  session({
+    secret: process.env.SESSION_SECRET,
+    resave: false,
+    saveUninitialized: false,
+    store: redisStore,
+    cookie: { secure: false, maxAge: 1000 * 60 },
+  })
+);
 // Global error handling
-app.use((err, _req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send("Something broke!");
-});
+app.use(error);
 
 app.use("/login", login);
+app.use("/logout", logout);
 app.use("/register", register);
-app.use("/", home);
+app.use("/", authen, home);
+// app.use("/", home);
 
 app.listen(+process.env.PORT, () => {
   console.log(`http://localhost:${process.env.PORT}`);

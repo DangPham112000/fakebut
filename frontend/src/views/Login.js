@@ -28,6 +28,7 @@ export default function Login() {
     e.preventDefault();
     fetch(`${API_URL}/login`, {
       method: "POST",
+      credentials: "include",
       headers: {
         "content-type": "application/json",
       },

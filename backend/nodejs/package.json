@@ -5,13 +5,16 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "nodemon app"
+    "dev": "set DEBUG=express-session & nodemon app"
   },
   "dependencies": {
+    "connect-redis": "^7.1.1",
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
     "express": "^4.19.1",
-    "mongodb": "^6.5.0"
+    "express-session": "^1.18.0",
+    "mongodb": "^6.5.0",
+    "redis": "^4.6.13"
   },
   "devDependencies": {
     "nodemon": "^3.1.0"

@@ -1,4 +1,5 @@
 import { MongoClient } from "mongodb";
+// const connStr = process.env.MONGO_URI || "";
 const connStr = process.env.ATLAS_URI || "";
 
 const client = new MongoClient(connStr);
@@ -12,5 +13,6 @@ try {
 }
 
 let db = conn.db("sample_mflix");
+// let db = conn.db("my_test");
 
 export default db;
