@@ -1,10 +1,6 @@
 export default (req, res, next) => {
-  req.session.user = null;
-  req.session.save((err) => {
+  req.session.destroy((err) => {
     if (err) return next(err);
-    req.session.regenerate(function (err) {
-      if (err) return next(err);
-      res.redirect("/login");
-    });
+    res.send({ logout: true });
   });
 };

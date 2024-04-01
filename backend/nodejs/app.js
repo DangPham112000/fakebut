@@ -7,7 +7,7 @@ import register from "./routes/register.js";
 import session from "express-session";
 import redisStore from "./db/redis.js";
 import error from "./middleware/error.js";
-import authen from "./middleware/authen.js";
+import authen from "./routes/authen.js";
 import logout from "./routes/logout.js";
 
 const app = express();
@@ -27,17 +27,17 @@ app.use(
     resave: false,
     saveUninitialized: false,
     store: redisStore,
-    cookie: { secure: false, maxAge: 1000 * 60 },
+    cookie: { secure: false, maxAge: 1000 * 60 * 60 },
   })
 );
 // Global error handling
 app.use(error);
 
 app.use("/login", login);
+app.use("/authen", authen);
 app.use("/logout", logout);
 app.use("/register", register);
-app.use("/", authen, home);
-// app.use("/", home);
+app.use("/", home);
 
 app.listen(+process.env.PORT, () => {
   console.log(`http://localhost:${process.env.PORT}`);

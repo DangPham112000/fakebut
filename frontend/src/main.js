@@ -7,6 +7,7 @@ import "./assets/vendor/font-awesome/css/font-awesome.min.css";
 import "./assets/css/argon-design-system-react.css";
 import Home from "./views/Home";
 import Register from "./views/Register";
+import Profile from "./views/Profile";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <BrowserRouter>
@@ -14,6 +15,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
       <Route path="/" exact element={<Home />} />
       <Route path="/login" exact element={<Login />} />
       <Route path="/register" exact element={<Register />} />
+      <Route path="/profile" exact element={<Profile />} />
       <Route path="*" element={<Navigate to="/" replace />} />
     </Routes>
   </BrowserRouter>

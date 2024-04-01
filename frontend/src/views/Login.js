@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import {
   Button,
   Card,
@@ -18,11 +18,18 @@ import githubSvg from "../assets/img/icons/common/github.svg";
 import googleSvg from "../assets/img/icons/common/google.svg";
 import { API_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
+import authenticate from "../utilize/authenticate";
 
 export default function Login() {
   const navigate = useNavigate();
   const [email, setEmail] = useState("dang@123");
   const [password, setPassword] = useState("123");
+
+  useEffect(() => {
+    authenticate().then((isAuth) => {
+      if (isAuth) navigate("/profile");
+    });
+  }, []);
 
   const handleForm = (e) => {
     e.preventDefault();
@@ -35,14 +42,13 @@ export default function Login() {
       body: JSON.stringify({ email, password }),
     })
       .then((res) => res.json())
-      .then(({ auth }) => {
-        if (auth) {
+      .then((rs) => {
+        if (rs.login) {
           navigate("/");
         } else {
           alert("account does not exist!");
         }
       });
-    console.log(email, password);
   };
 
   return (
