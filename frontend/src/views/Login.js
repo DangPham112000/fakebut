@@ -20,7 +20,7 @@ import { API_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
 import authenticate from "../utilize/authenticate";
 
-export default function Login() {
+export default () => {
   const navigate = useNavigate();
   const [email, setEmail] = useState("dang@123");
   const [password, setPassword] = useState("123");
@@ -176,4 +176,4 @@ export default function Login() {
       </section>
     </>
   );
-}
+};
