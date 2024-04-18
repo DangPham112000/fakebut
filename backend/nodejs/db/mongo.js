@@ -9,6 +9,7 @@ let conn;
 try {
   conn = await client.connect();
 } catch (error) {
+  console.log("mongo err");
   console.log(error);
 }
 
