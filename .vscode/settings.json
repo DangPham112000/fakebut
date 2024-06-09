@@ -1,0 +1,16 @@
+{
+	"material-icon-theme.files.associations": {},
+	"material-icon-theme.folders.associations": {
+		"nodejs": "Node",
+		"nginx": "Core",
+		"utilize": "utils",
+		"network": "shared"
+	},
+	"editor.formatOnSave": true,
+	"editor.tabSize": 4,
+	"editor.detectIndentation": false,
+	"editor.insertSpaces": true,
+	"editor.indentSize": "tabSize",
+	"editor.autoIndent": "advanced",
+	"editor.defaultFormatter": "esbenp.prettier-vscode"
+}

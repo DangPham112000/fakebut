@@ -1,19 +1,24 @@
 import { MongoClient } from "mongodb";
+
 // const connStr = process.env.MONGO_URI || "";
 const connStr = process.env.ATLAS_URI || "";
+// const dbName = 'my_test';
+const dbName = "sample_mflix";
 
-const client = new MongoClient(connStr);
+const getDatabase = async (connectionString, databaseName) => {
+	const client = new MongoClient(connectionString);
+	let conn;
 
-let conn;
+	try {
+		conn = await client.connect();
+	} catch (error) {
+		console.error(error.code + " - Can not connect mongoDB");
+		return "";
+	}
 
-try {
-  conn = await client.connect();
-} catch (error) {
-  console.log("mongo err");
-  console.log(error);
-}
+	return conn.db(databaseName);
+};
 
-let db = conn.db("sample_mflix");
-// let db = conn.db("my_test");
+const db = await getDatabase(connStr, dbName);
 
 export default db;
