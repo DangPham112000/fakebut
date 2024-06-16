@@ -84,9 +84,7 @@ export default function SettingsCard(props) {
 	//RETURN
 	return (
 		<Card variant="outlined" sx={{ height: "100%", width: "100%" }}>
-			{/* TABS */}
 			<br></br>
-
 			<Tabs
 				value={value}
 				onChange={handleChange}
