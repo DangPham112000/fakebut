@@ -10,11 +10,16 @@ docker build -t dantefarm1411/fakebut_frontend:v1 .
 docker run -p 8080:5173 dantefarm1411/fakebut_frontend:v1
 ```
 
-# React + Vite
+# Source tree explain
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+-   api: contain functions call backend apis
+-   assets: stuff to public
+-   helpers: common functions, can be used anywhere
+-   utils: functions that can only be used in this project
+-   views: contain all views
+-   components: all components can be reused
 
-Currently, two official plugins are available:
+# Todo
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+-   Create mock api
+-   Setup frontend dev only --> will use mock api instead start backend
