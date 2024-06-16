@@ -86,6 +86,7 @@ export default function SettingsCard(props) {
 		<Card variant="outlined" sx={{ height: "100%", width: "100%" }}>
 			{/* TABS */}
 			<br></br>
+
 			<Tabs
 				value={value}
 				onChange={handleChange}
