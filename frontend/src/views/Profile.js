@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { Grid } from "@mui/material";
-import Navbar from "../components/Navbars/NavBar.js";
+import Navbar from "../components/Navbars/AppBar.js";
 import { useNavigate } from "react-router-dom";
 import isAuthenticated from "../utils/isAuthenticated.js";
 import SettingsCard from "../components/Profile/SettingsCard.js";

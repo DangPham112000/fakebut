@@ -1,10 +1,6 @@
 import { API_URL } from "../../config";
+import getRequest from "../helpers/network/getRequest";
 
 export default async () => {
-  const authenResp = await fetch(`${API_URL}/authen`, {
-    method: "GET",
-    credentials: "include",
-  });
-  const isAuth = await authenResp.json();
-  return isAuth;
+	return await getRequest(`${API_URL}/authen`);
 };

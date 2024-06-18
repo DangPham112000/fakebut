@@ -18,6 +18,7 @@ import { API_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
 import authenticate from "../apiHandlers/authenticate";
 import { LockOutlined } from "@mui/icons-material";
+import login from "../apiHandlers/login";
 
 export default () => {
 	const navigate = useNavigate();
@@ -29,28 +30,17 @@ export default () => {
 			.then((e) => e.text())
 			.then(console.log);
 		authenticate().then((isAuth) => {
-			if (isAuth) navigate("/profile");
+			if (isAuth) navigate("/home");
 		});
 	}, []);
 
-	const handleForm = (e) => {
+	const handleLogin = (e) => {
 		e.preventDefault();
-		fetch(`${API_URL}/login`, {
-			method: "POST",
-			credentials: "include",
-			headers: {
-				"content-type": "application/json",
-			},
-			body: JSON.stringify({ email, password }),
-		})
-			.then((res) => res.json())
-			.then((rs) => {
-				if (rs.login) {
-					navigate("/");
-				} else {
-					alert("account does not exist!");
-				}
-			});
+		login(email, password).then((rs) => {
+			if (!rs) alert("Unknown error! Please contact dev :)))");
+			if (rs.login) navigate("/");
+			else alert("account does not exist!");
+		});
 	};
 
 	return (
@@ -69,11 +59,11 @@ export default () => {
 						<LockOutlined />
 					</Avatar>
 					<Typography component="h1" variant="h5">
-						Sign in
+						Log In
 					</Typography>
 					<Box
 						component="form"
-						onSubmit={handleForm}
+						onSubmit={handleLogin}
 						noValidate
 						sx={{ mt: 1 }}
 					>
