@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API_URL } from "../../config";
+import { API_ENDPOINT } from "../../config";
 import { useNavigate } from "react-router-dom";
 import Navbar from "../components/Navbars/AppBar";
 import { Container } from "@mui/material";

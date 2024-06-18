@@ -14,6 +14,9 @@ export default async (params) => {
 		})
 			.then((response) => response.json())
 			.then((result) => resolve([result]))
-			.catch((e) => resolve([null, 400]));
+			.catch((e) => {
+				console.log(e);
+				resolve([null, 400]);
+			});
 	});
 };

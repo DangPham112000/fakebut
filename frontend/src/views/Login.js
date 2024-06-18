@@ -14,7 +14,6 @@ import {
 } from "@mui/material";
 import githubSvg from "../assets/img/icons/common/github.svg";
 import googleSvg from "../assets/img/icons/common/google.svg";
-import { API_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
 import authenticate from "../apiHandlers/authenticate";
 import { LockOutlined } from "@mui/icons-material";
@@ -26,19 +25,19 @@ export default () => {
 	const [password, setPassword] = useState("123");
 
 	useEffect(() => {
-		fetch(`${API_URL}/google`)
-			.then((e) => e.text())
-			.then(console.log);
-		authenticate().then((isAuth) => {
-			if (isAuth) navigate("/home");
-		});
+		// authenticate().then((isAuth) => {
+		// 	if (isAuth) navigate("/home");
+		// });
 	}, []);
 
 	const handleLogin = (e) => {
 		e.preventDefault();
-		login(email, password).then((rs) => {
-			if (!rs) alert("Unknown error! Please contact dev :)))");
-			if (rs.login) navigate("/");
+		login(email, password).then(([rs, err]) => {
+			if (!rs) {
+				alert("Unknown error! Please contact dev :)))");
+				return;
+			}
+			if (rs.errorCode === 0) navigate("/");
 			else alert("account does not exist!");
 		});
 	};

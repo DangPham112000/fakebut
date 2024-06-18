@@ -14,37 +14,39 @@ import {
 } from "@mui/material";
 import githubSvg from "../assets/img/icons/common/github.svg";
 import googleSvg from "../assets/img/icons/common/google.svg";
-import { API_URL } from "../../config";
 import { useNavigate } from "react-router-dom";
 import { LockOutlined } from "@mui/icons-material";
+import register from "../apiHandlers/register";
 
 export default () => {
-	let [firstName, setFirstName] = useState("Pham");
-	let [lastName, setLastName] = useState("Dang ne");
-	let [email, setEmail] = useState("dang@123");
-	let [password, setPassword] = useState("123");
 	const navigate = useNavigate();
+
+	const [firstName, setFirstName] = useState("Pham");
+	const [lastName, setLastName] = useState("Dang ne");
+	const [email, setEmail] = useState("dang@123");
+	const [password, setPassword] = useState("123");
+
 	const handleRegister = (e) => {
 		e.preventDefault();
-		fetch(`${API_URL}/register`, {
-			method: "POST",
-			headers: {
-				"content-type": "application/json",
-			},
-			body: JSON.stringify({ firstName, lastName, email, password }),
-		})
-			.then((res) => res.json())
-			.then((rs) => {
-				const { status } = rs;
-				if (status) {
+		register(firstName, lastName, email, password).then(([rs, err]) => {
+			if (err) {
+				alert("Unexpected client error occur!");
+				return;
+			}
+			if (rs) {
+				if (rs.errorCode === 0) {
 					navigate("/login");
-				} else {
-					if (rs.code === 1) alert("duplicate");
-					else alert("idk");
+					return;
 				}
-			})
-			.catch((e) => console.log(e));
+				if (rs.errorCode === 7) {
+					alert("This email is already registed!");
+					return;
+				}
+				alert("Unexpected server error occur!");
+			}
+		});
 	};
+
 	return (
 		<>
 			<Container component="main" maxWidth="xs">
@@ -61,7 +63,7 @@ export default () => {
 						<LockOutlined />
 					</Avatar>
 					<Typography component="h1" variant="h5">
-						Sign up
+						Register
 					</Typography>
 					<Box
 						component="form"
