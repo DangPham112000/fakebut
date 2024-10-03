@@ -20,5 +20,10 @@ This social media created for learning
 
 ## Todo
 
--   Setup whole project run command
-    -   When run at root will run backend-dev first and then start frontend-dev
+- 
+
+
+## Start whole project
+
+- Make `start.sh` file can be executable: `chmod +x start.dev.sh`
+- Run this command: `./start.dev.sh`
