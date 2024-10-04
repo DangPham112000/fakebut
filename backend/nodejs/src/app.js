@@ -1,14 +1,14 @@
-import "./loadEnvironment.js";
+
 import express from "express";
 import cors from "cors";
-import login from "./routes/login.js";
-import home from "./routes/home.js";
-import register from "./routes/register.js";
+import login from "../routes/login.js";
+import home from "../routes/home.js";
+import register from "../routes/register.js";
 import session from "express-session";
-import redisStore from "./db/redis.js";
-import error from "./middleware/error.js";
-import authen from "./routes/authen.js";
-import logout from "./routes/logout.js";
+import redisStore from "../db/redis.js";
+import error from "../middleware/error.js";
+import authen from "../routes/authen.js";
+import logout from "../routes/logout.js";
 
 const app = express();
 
@@ -56,6 +56,5 @@ app.use("/logout", logout);
 app.use("/register", register);
 app.use("/", home);
 
-app.listen(+process.env.PORT, () => {
-	console.log(`http://localhost:${process.env.PORT}`);
-});
+
+export default app;

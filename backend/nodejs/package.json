@@ -5,8 +5,8 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "set DEBUG=express-session & nodemon app",
-    "start": "set DEBUG=express-session & node app"
+    "dev": "set DEBUG=express-session & nodemon server",
+    "start": "set DEBUG=express-session & node server"
   },
   "dependencies": {
     "connect-redis": "^7.1.1",
