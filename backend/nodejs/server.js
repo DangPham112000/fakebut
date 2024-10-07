@@ -1,10 +1,10 @@
-import "./loadEnvironment.js";
 import app from "./src/app.js";
+import configMongodb from "./src/configs/config.mongodb.js";
 
-const PORT = +process.env.PORT;
+const {app: {port}} = configMongodb;
 
-const server = app.listen(PORT, () => {
-	console.log(`http://localhost:${PORT}`);
+const server = app.listen(port, () => {
+	console.log(`http://localhost:${port}`);
 });
 
 // process.on('SIGINT', () => {

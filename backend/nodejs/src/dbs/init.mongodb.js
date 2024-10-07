@@ -1,7 +1,10 @@
 import mongoose from "mongoose";
-import {countConnections} from '../helpers/check.connect.js'
-// const connStr = process.env.MONGO_URI || "";
-const connectionString = process.env.ATLAS_URI || "";
+import {countConnections} from '../helpers/check.connect.js';
+import config from '../configs/config.mongodb.js'
+
+const {db: {name, host, port, uri, maxPoolSize}} = config;
+// const connectionString = uri || "";
+const connectionString = `mongodb://${host}:${port}/` || "";
 
 // Singleton
 class Database {
@@ -15,7 +18,9 @@ class Database {
             mongoose.set('debug', {color: true});
         }
 
-        mongoose.connect(connectionString)
+        mongoose.connect(connectionString, {
+            maxPoolSize
+        })
             .then(_ => {
                 console.log('Connected mongoBD success!!!');
                 countConnections();
