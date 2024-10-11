@@ -1,16 +1,15 @@
 import express from "express";
 import access from "./access/index.js";
+import { apiKey, validatePermission } from "../auth/checkAuth.js";
 
 const router = express.Router();
 
-router.use("/v1/api", access);
+// check apiKey
+router.use(apiKey);
+// check permission
+// router.use(validatePermission("1111"));
+router.use(validatePermission("0000"));
 
-// router.get('/test', (req, res) => {
-//     const compressedStr = "super long string";
-//     return res.status(201).json({
-//         mess: "hello world",
-//         metadata: compressedStr.repeat(1000)
-//     })
-// })
+router.use("/v1/api", access);
 
 export default router;

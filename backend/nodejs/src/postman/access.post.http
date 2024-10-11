@@ -3,10 +3,11 @@
 
 POST {{url_dev}}/user/signup
 Content-Type: application/json
+x-api-key: 2f9ab30e22b0312538ce881e36527a08cd5c88e20db07249aad97565ad16912e47cd83d4c4526d1af807c7cd6d49d215451896e2a301bdbc55912b6a8d048708
 
 {
-    "name": "dangne7",
-    "email": "dangne7@gmail.com",
+    "name": "dangne07",
+    "email": "dangne07@gmail.com",
     "password": "root1234"
 
 }
