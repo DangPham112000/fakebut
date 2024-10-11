@@ -60,4 +60,23 @@ app.use(router);
 // app.use("/register", register);
 // app.use("/", home);
 
+// handling errors
+
+// wrong route => throw error 404 not found
+app.use((req, res, next) => {
+	const err = new Error("NOT FOUND");
+	err.statusCode = 404;
+	next(err);
+});
+
+// catch all error
+app.use((err, req, res, next) => {
+	const statusCode = err.statusCode || 500;
+	return res.status(statusCode).json({
+		status: "error",
+		code: statusCode,
+		message: err.message || "Internal Server Error",
+	});
+});
+
 export default app;
