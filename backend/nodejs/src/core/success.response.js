@@ -1,18 +1,10 @@
-const StatusCode = {
-	OK: 200,
-	CREATED: 201,
-};
-
-const ReasonStatusCode = {
-	OK: "Success",
-	CREATED: "Created",
-};
+import { ReasonPhrases, StatusCodes } from "../utils/httpStatusCode.js";
 
 class SuccessResponse {
 	constructor({
 		message,
-		statusCode = StatusCode.OK,
-		reasonStatusCode = ReasonStatusCode.OK,
+		statusCode = StatusCodes.OK,
+		reasonStatusCode = ReasonPhrases.OK,
 		metatdata = {},
 	}) {
 		this.message = message || reasonStatusCode;
@@ -36,8 +28,8 @@ export class CREATED extends SuccessResponse {
 		options = {},
 		message,
 		metatdata,
-		statusCode = StatusCode.CREATED,
-		reasonStatusCode = ReasonStatusCode.CREATED,
+		statusCode = StatusCodes.CREATED,
+		reasonStatusCode = ReasonPhrases.CREATED,
 	}) {
 		super({ message, metatdata, statusCode, reasonStatusCode });
 		this.options = options;

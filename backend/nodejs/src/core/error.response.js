@@ -1,12 +1,4 @@
-const StatusCode = {
-	FORBIDDEN: 403,
-	CONFLICT: 409,
-};
-
-const ReasonStatusCode = {
-	FORBIDDEN: "Bad request error",
-	CONFLICT: "Conflict request error",
-};
+import { ReasonPhrases, StatusCodes } from "../utils/httpStatusCode.js";
 
 class ErrorResponse extends Error {
 	constructor(message, statusCode) {
@@ -17,8 +9,8 @@ class ErrorResponse extends Error {
 
 export class ConflictRequestError extends ErrorResponse {
 	constructor(
-		message = ReasonStatusCode.CONFLICT,
-		statusCode = StatusCode.CONFLICT
+		message = ReasonPhrases.CONFLICT,
+		statusCode = StatusCodes.CONFLICT
 	) {
 		super(message, statusCode);
 	}
@@ -26,8 +18,17 @@ export class ConflictRequestError extends ErrorResponse {
 
 export class BadRequestError extends ErrorResponse {
 	constructor(
-		message = ReasonStatusCode.FORBIDDEN,
-		statusCode = StatusCode.FORBIDDEN
+		message = ReasonPhrases.FORBIDDEN,
+		statusCode = StatusCodes.FORBIDDEN
+	) {
+		super(message, statusCode);
+	}
+}
+
+export class AuthFailureError extends ErrorResponse {
+	constructor(
+		message = ReasonPhrases.UNAUTHORIZED,
+		statusCode = StatusCodes.UNAUTHORIZED
 	) {
 		super(message, statusCode);
 	}
