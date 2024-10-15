@@ -1,4 +1,13 @@
 import jwt from "jsonwebtoken";
+import asyncHandler from "../helpers/asyncHandler.js";
+import { AuthFailureError, NotFoundError } from "../core/error.response.js";
+import KeyTokenService from "../services/keyToken.service.js";
+
+const HEADER = {
+	API_KEY: "x-api-key",
+	CLIENT_ID: "x-client-id",
+	AUTHORIZATION: "authorization",
+};
 
 export const createTokenPair = async (payload, publicKey, privateKey) => {
 	try {
@@ -21,6 +30,36 @@ export const createTokenPair = async (payload, publicKey, privateKey) => {
 
 		return { accessToken, refreshToken };
 	} catch (error) {
-		return error;
+		throw error;
 	}
 };
+
+/**
+ * 1. Check userId missing?
+ * 2. Get accessToken
+ * 3. Verify token
+ * 4. Check user in DBs
+ * 5. Check key store with userId
+ * 6. OK all => return next()
+ */
+export const authentication = asyncHandler(async (req, res, next) => {
+	const userId = req.headers[HEADER.CLIENT_ID];
+	if (!userId) throw new AuthFailureError("Invalid request");
+
+	const keyStore = await KeyTokenService.findByUserId(userId);
+	if (!keyStore) throw new NotFoundError("Not found keyStore");
+
+	const accessToken = req.headers[HEADER.AUTHORIZATION];
+	if (!accessToken) throw new AuthFailureError("Invalid request");
+
+	try {
+		const decodeUser = jwt.verify(accessToken, keyStore.publicKey);
+		if (userId !== decodeUser.userId) {
+			throw new AuthFailureError("Invalid userId");
+		}
+		req.keyStore = keyStore;
+		return next();
+	} catch (error) {
+		return error;
+	}
+});
