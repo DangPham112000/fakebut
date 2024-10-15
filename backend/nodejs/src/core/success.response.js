@@ -1,6 +1,6 @@
 import { ReasonPhrases, StatusCodes } from "../utils/httpStatusCode.js";
 
-class SuccessResponse {
+export class SuccessResponse {
 	constructor({
 		message,
 		statusCode = StatusCodes.OK,
