@@ -23,3 +23,13 @@ x-api-key:
     "email": "dangne01@gmail.com",
     "password": "root1234"
 }
+
+### logout
+POST {{url_dev}}/user/logout
+Content-Type: application/json
+x-api-key: 
+x-client-id: 67090b66d9d9d3a681149940
+authorization: 
+
+{
+}
