@@ -33,3 +33,14 @@ authorization:
 
 {
 }
+
+### handleRefreshToken
+POST {{url_dev}}/user/handleRefreshToken
+Content-Type: application/json
+x-api-key: 
+x-client-id: 67090b66d9d9d3a681149940
+authorization: 
+
+{
+    "refreshToken": ""
+}

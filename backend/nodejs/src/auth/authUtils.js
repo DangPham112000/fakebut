@@ -1,4 +1,5 @@
 import jwt from "jsonwebtoken";
+import crypto from "crypto";
 import asyncHandler from "../helpers/asyncHandler.js";
 import { AuthFailureError, NotFoundError } from "../core/error.response.js";
 import KeyTokenService from "../services/keyToken.service.js";
@@ -63,3 +64,22 @@ export const authentication = asyncHandler(async (req, res, next) => {
 		return error;
 	}
 });
+
+export const verifyJWT = (token, publicKey) => {
+	return jwt.verify(token, publicKey);
+};
+
+export const genKeyPairRSA = () => {
+	const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
+		modulusLength: 4096,
+		publicKeyEncoding: {
+			type: "pkcs1",
+			format: "pem",
+		},
+		privateKeyEncoding: {
+			type: "pkcs1",
+			format: "pem",
+		},
+	});
+	return { privateKey, publicKey };
+};
