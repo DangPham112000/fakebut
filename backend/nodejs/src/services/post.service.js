@@ -22,31 +22,42 @@ export class PostFactory {
 
 // define base post class
 class Post {
-	constructor({ title, media, content, price, owner, topic, attributes }) {
+	constructor({
+		title,
+		media,
+		content,
+		price,
+		postOwner,
+		topic,
+		attributes,
+	}) {
 		this.title = title;
 		this.media = media;
 		this.content = content;
 		this.price = price;
-		this.owner = owner;
+		this.postOwner = postOwner;
 		this.topic = topic;
 		this.attributes = attributes;
 	}
 
 	// create new post
-	async createPost() {
-		return await postModel.create(this);
+	async createPost(postId) {
+		return await postModel.create({ ...this, _id: postId });
 	}
 }
 
 // Define sub-class for difference post types: Movie
 class Movie extends Post {
 	async createPost() {
-		const newMovie = await movieModel.create(this.attributes);
+		const newMovie = await movieModel.create({
+			...this.attributes,
+			postOwner: this.postOwner,
+		});
 		if (!newMovie) {
 			throw new BadRequestError("Can not create new Movie");
 		}
 
-		const newPost = await super.createPost();
+		const newPost = await super.createPost(newMovie._id);
 		if (!newPost) {
 			throw new BadRequestError("Can not create new Post");
 		}
@@ -58,12 +69,15 @@ class Movie extends Post {
 // Define sub-class for difference post types: Music
 class Music extends Post {
 	async createPost() {
-		const newMusic = await musicModel.create(this.attributes);
+		const newMusic = await musicModel.create({
+			...this.attributes,
+			postOwner: this.postOwner,
+		});
 		if (!newMusic) {
 			throw new BadRequestError("Can not create new Music");
 		}
 
-		const newPost = await super.createPost();
+		const newPost = await super.createPost(newMusic._id);
 		if (!newPost) {
 			throw new BadRequestError("Can not create new Post");
 		}

@@ -10,7 +10,7 @@ const postSchema = new Schema(
 		media: String,
 		content: { type: String, required: true },
 		price: { type: Number, default: 0 },
-		owner: { type: Schema.Types.ObjectId, ref: "User" },
+		postOwner: { type: Schema.Types.ObjectId, ref: "User" },
 		topic: {
 			type: String,
 			required: true,
@@ -28,6 +28,7 @@ const movieSchema = new Schema(
 	{
 		movieName: { type: String, required: true },
 		director: { type: String, required: true },
+		postOwner: { type: Schema.Types.ObjectId, ref: "User" },
 	},
 	{
 		collection: "Movies",
@@ -39,6 +40,7 @@ const musicSchema = new Schema(
 	{
 		musicName: { type: String, required: true },
 		singer: { type: String, required: true },
+		postOwner: { type: Schema.Types.ObjectId, ref: "User" },
 	},
 	{
 		collection: "Musics",
@@ -46,30 +48,28 @@ const musicSchema = new Schema(
 	}
 );
 
-const techSchema = new Schema(
-	{
-		productName: { type: String, required: true },
-		inventor: { type: String, required: true },
-	},
-	{
-		collection: "Technologies",
-		timestamps: true,
-	}
-);
+// const techSchema = new Schema(
+// 	{
+// 		productName: { type: String, required: true },
+// 		inventor: { type: String, required: true },
+// 	},
+// 	{
+// 		collection: "Technologies",
+// 		timestamps: true,
+// 	}
+// );
 
-const eduSchema = new Schema(
-	{
-		subject: { type: String, required: true },
-		techer: { type: String, required: true },
-	},
-	{
-		collection: "Educations",
-		timestamps: true,
-	}
-);
+// const eduSchema = new Schema(
+// 	{
+// 		subject: { type: String, required: true },
+// 		techer: { type: String, required: true },
+// 	},
+// 	{
+// 		collection: "Educations",
+// 		timestamps: true,
+// 	}
+// );
 
 export const postModel = model(DOCUMENT_NAME, postSchema),
 	movieModel = model("Movie", movieSchema),
-	musicModel = model("Music", musicSchema),
-	techModel = model("Technology", techSchema),
-	eduModel = model("Education", eduSchema);
+	musicModel = model("Music", musicSchema);

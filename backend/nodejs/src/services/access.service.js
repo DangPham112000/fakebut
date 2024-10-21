@@ -28,6 +28,7 @@ class AccessService {
 	 * 4. Generate tokens
 	 * 5. Get data return login
 	 */
+	// TODO: must reuse pub & priv key (if exist) to create new token pair
 	static login = async ({ email, password, refreshToken = null }) => {
 		const foundUser = await findByEmail({ email });
 		if (!foundUser) {

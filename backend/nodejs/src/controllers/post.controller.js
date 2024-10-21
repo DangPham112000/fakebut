@@ -5,7 +5,10 @@ class PostController {
 	async createPost(req, res, next) {
 		new SuccessResponse({
 			message: "create new post success!!!",
-			metatdata: await PostFactory.create(req.body.topic, req.body),
+			metatdata: await PostFactory.create(req.body.topic, {
+				...req.body,
+				postOwner: req.user.userId,
+			}),
 		}).send(res);
 	}
 }
