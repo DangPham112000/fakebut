@@ -44,3 +44,23 @@ authorization:
 {
     "refreshToken": ""
 }
+
+### create post
+POST {{url_dev}}/post/
+Content-Type: application/json
+x-api-key: 
+x-client-id: 67090b66d9d9d3a681149940
+authorization: 
+
+{
+    "title": "New Rose's MV is wonderful",
+    "media": "This is a video link",
+    "content":"I have heard a milion times this mv",
+    "price": "0",
+    "owner": "67090b66d9d9d3a681149940",
+    "topic": "Music",
+    "attributes": {
+        "musicName": "APT",
+        "singer": "Rose"
+    }
+}
