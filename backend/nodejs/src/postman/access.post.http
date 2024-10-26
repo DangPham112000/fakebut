@@ -1,4 +1,3 @@
-
 @url_dev=http://localhost:3055/v1/api
 
 ### signup
@@ -31,8 +30,6 @@ x-api-key:
 x-client-id: 671caf1631df2ea7cb9529ec
 authorization: 
 
-{
-}
 
 ### handleRefreshTokenV2
 POST {{url_dev}}/user/handleRefreshToken
@@ -40,22 +37,3 @@ Content-Type: application/json
 x-api-key: 
 x-client-id: 671caf1631df2ea7cb9529ec
 x-rtoken-id:  
-
-### create post
-POST {{url_dev}}/post
-Content-Type: application/json
-x-api-key: 
-x-client-id: 671caf1631df2ea7cb9529ec
-authorization: 
-
-{
-    "title": "New tech Meetar VR",
-    "media": "This is a video link",
-    "content":"Super cool VR",
-    "price": "1",
-    "topic": "Tech",
-    "attributes": {
-        "productName": "Meetar VR",
-        "inventor": "Mac Zookubirth"
-    }
-}

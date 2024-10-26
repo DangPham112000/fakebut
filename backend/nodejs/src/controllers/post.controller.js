@@ -11,6 +11,15 @@ class PostController {
 			}),
 		}).send(res);
 	}
+
+	async findAllDrafts(req, res, next) {
+		new SuccessResponse({
+			message: "Get list Draft success!!!",
+			metatdata: await PostFactory.findAllDrafts({
+				userId: req.user.userId,
+			}),
+		}).send(res);
+	}
 }
 
 export default new PostController();

@@ -1,0 +1,27 @@
+@url_dev=http://localhost:3055/v1/api
+
+### create post
+POST {{url_dev}}/post
+Content-Type: application/json
+x-api-key: 
+x-client-id: 671caf1631df2ea7cb9529ec
+authorization: 
+
+{
+    "title": "Mantra is Ok",
+    "media": "This is a video link",
+    "content":"OK",
+    "price": "",
+    "topic": "Music",
+    "attributes": {
+        "musicName": "Mantra",
+        "singer": "Jennie"
+    }
+}
+
+### find all user drafts
+GET {{url_dev}}/post/drafts/all
+Content-Type: application/json
+x-api-key: 
+x-client-id: 671caf1631df2ea7cb9529ec
+authorization: 

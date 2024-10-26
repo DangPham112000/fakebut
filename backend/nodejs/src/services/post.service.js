@@ -8,14 +8,15 @@ import {
 	BadRequestError,
 	InternalServerError,
 } from "../core/error.response.js";
+import PostRepo from "../models/repositories/post.repo.js";
 
 // define factory class to create post
 export class PostFactory {
 	static postRegistry = {}; // postTopic - classRef
 
-	static registerPostTopic = (topic, classRef) => {
+	static registerPostTopic(topic, classRef) {
 		PostFactory.postRegistry[topic] = classRef;
-	};
+	}
 
 	/**
 	 * @param {*} topic enum ['Music', 'Movie', 'Tech']
@@ -27,6 +28,12 @@ export class PostFactory {
 			throw new BadRequestError(`Invalid Post topic::${topic}`);
 		}
 		return new postClassRef(payload).createPost();
+	}
+
+	// Query //
+	static async findAllDrafts({ userId, limit = 50, skip = 0 }) {
+		const query = { postOwner: userId, isDraft: true };
+		return await PostRepo.findAllDrafts({ query, limit, skip });
 	}
 }
 

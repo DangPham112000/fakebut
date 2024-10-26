@@ -7,5 +7,6 @@ const router = express.Router();
 
 router.use(authenticationV2);
 router.post("", asyncHandler(postController.createPost));
+router.get("/drafts/all", asyncHandler(postController.findAllDrafts));
 
 export default router;

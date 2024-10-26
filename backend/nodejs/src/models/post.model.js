@@ -1,4 +1,6 @@
 import mongoose from "mongoose";
+import slugify from "slugify";
+
 const { Schema, model } = mongoose;
 
 const DOCUMENT_NAME = "Post";
@@ -9,6 +11,7 @@ const postSchema = new Schema(
 		title: { type: String, required: true },
 		media: String,
 		content: { type: String, required: true },
+		slug: String,
 		price: { type: Number, default: 0 },
 		postOwner: { type: Schema.Types.ObjectId, ref: "User" },
 		topic: {
@@ -17,12 +20,30 @@ const postSchema = new Schema(
 			enum: ["Movie", "Music", "Tech", "Edu"],
 		},
 		attributes: { type: Schema.Types.Mixed, required: true },
+
+		satisfied: { type: Number, default: 0 },
+		unsatisfied: { type: Number, default: 0 },
+		share: { type: Number, default: 0 },
+
+		isDraft: { type: Boolean, default: true, index: true, select: false },
+		isPublished: {
+			type: Boolean,
+			default: false,
+			index: true,
+			select: false,
+		},
 	},
 	{
 		collection: COLLECTION_NAME,
 		timestamps: true,
 	}
 );
+
+// Post middleware: runs before .save(), .create(), ....
+postSchema.pre("save", function (next) {
+	this.slug = slugify(this.title, { lower: true });
+	next();
+});
 
 const movieSchema = new Schema(
 	{

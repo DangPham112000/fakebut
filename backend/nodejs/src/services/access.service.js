@@ -1,5 +1,4 @@
 import bcrypt from "bcrypt";
-import userModel from "../models/user.model.js";
 import KeyTokenService from "./keyToken.service.js";
 import {
 	createTokenPair,
@@ -14,11 +13,6 @@ import {
 	InternalServerError,
 } from "../core/error.response.js";
 import { createUser, findByEmail } from "./user.service.js";
-
-const ROLES = {
-	USER: "USER",
-	ADMIN: "ADMIN",
-};
 
 class AccessService {
 	/**
