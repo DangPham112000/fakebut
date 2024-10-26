@@ -35,6 +35,17 @@ class AccessController {
 			),
 		}).send(res);
 	};
+
+	handleRefreshTokenV2 = async (req, res, next) => {
+		new SuccessResponse({
+			message: "Update token success",
+			metatdata: await AccessService.handleRefreshTokenV2({
+				refreshToken: req.refreshToken,
+				user: req.user,
+				keyStore: req.keyStore,
+			}),
+		}).send(res);
+	};
 }
 
 export default new AccessController();

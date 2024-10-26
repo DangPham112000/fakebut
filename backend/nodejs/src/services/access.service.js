@@ -181,6 +181,42 @@ class AccessService {
 			tokens,
 		};
 	};
+
+	static handleRefreshTokenV2 = async ({ refreshToken, user, keyStore }) => {
+		const { userId, email } = user;
+		if (keyStore.refreshTokensUsed.includes(refreshToken)) {
+			await KeyTokenService.removeByUserId(userId);
+			throw new ForbiddenError("Something wrong happen. Pls relogin");
+		}
+
+		if (keyStore.refreshToken !== refreshToken) {
+			throw new AuthFailureError("Token is deleted or never exist");
+		}
+
+		const foundUser = await findByEmail({ email });
+		if (!foundUser) {
+			throw new AuthFailureError("User is deleted or never exist");
+		}
+
+		const tokens = await createTokenPair(
+			{ userId: foundUser._id, email },
+			keyStore.publicKey,
+			keyStore.privateKey
+		);
+		await keyStore.updateOne({
+			$set: {
+				refreshToken: tokens.refreshToken,
+			},
+			$addToSet: {
+				refreshTokensUsed: refreshToken,
+			},
+		});
+
+		return {
+			user,
+			tokens,
+		};
+	};
 }
 
 export default AccessService;
