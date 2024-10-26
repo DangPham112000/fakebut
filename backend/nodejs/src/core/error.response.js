@@ -18,8 +18,8 @@ export class ConflictRequestError extends ErrorResponse {
 
 export class BadRequestError extends ErrorResponse {
 	constructor(
-		message = ReasonPhrases.FORBIDDEN,
-		statusCode = StatusCodes.FORBIDDEN
+		message = ReasonPhrases.BAD_REQUEST,
+		statusCode = StatusCodes.BAD_REQUEST
 	) {
 		super(message, statusCode);
 	}
@@ -47,6 +47,15 @@ export class ForbiddenError extends ErrorResponse {
 	constructor(
 		message = ReasonPhrases.FORBIDDEN,
 		statusCode = StatusCodes.FORBIDDEN
+	) {
+		super(message, statusCode);
+	}
+}
+
+export class InternalServerError extends ErrorResponse {
+	constructor(
+		message = ReasonPhrases.INTERNAL_SERVER_ERROR,
+		statusCode = StatusCodes.INTERNAL_SERVER_ERROR
 	) {
 		super(message, statusCode);
 	}

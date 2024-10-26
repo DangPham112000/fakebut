@@ -1,5 +1,4 @@
 import bcrypt from "bcrypt";
-import crypto from "crypto";
 import userModel from "../models/user.model.js";
 import KeyTokenService from "./keyToken.service.js";
 import {
@@ -12,8 +11,9 @@ import {
 	AuthFailureError,
 	BadRequestError,
 	ForbiddenError,
+	InternalServerError,
 } from "../core/error.response.js";
-import { findByEmail } from "./user.service.js";
+import { createUser, findByEmail } from "./user.service.js";
 
 const ROLES = {
 	USER: "USER",
@@ -64,56 +64,48 @@ class AccessService {
 
 	static signUp = async ({ name, email, password }) => {
 		// Check email exists
-		const user = await userModel.findOne({ email }).lean();
-		if (user) {
-			throw new BadRequestError("Error: User has aleady registered");
+		const foundUser = await findByEmail({ email });
+		if (foundUser) {
+			throw new BadRequestError("User has aleady registered");
 		}
 
 		const hashedPass = await bcrypt.hash(password, 10);
 
-		const newUser = await userModel.create({
+		const newUser = await createUser({
 			name,
 			email,
-			password: hashedPass,
-			roles: [ROLES.USER],
+			hashedPass,
 		});
+		if (!newUser) {
+			throw new InternalServerError("Can not create new user");
+		}
+		console.log("newUser:: ", newUser);
 
 		// handle token
-		if (newUser) {
-			const { privateKey, publicKey } = genKeyPairRSA();
+		const { privateKey, publicKey } = genKeyPairRSA();
+		console.log({ privateKey, publicKey });
 
-			console.log({ privateKey, publicKey });
+		// create a token pair
+		const tokens = await createTokenPair(
+			{ userId: newUser._id, email },
+			publicKey,
+			privateKey
+		);
+		console.log("Create tokens success:: ", tokens);
 
-			// create a token pair
-			const tokens = await createTokenPair(
-				{ userId: newUser._id, email },
-				publicKey,
-				privateKey
-			);
-			console.log("Create tokens success:: ", tokens);
-
-			const publicKeyString = await KeyTokenService.createKeyToken({
-				userId: newUser._id,
-				publicKey,
-				privateKey,
-				refreshToken: tokens.refreshToken,
-			});
-
-			if (!publicKeyString) {
-				return {
-					code: "xxx",
-					message: "publicKeyString got error",
-				};
-			}
-
-			return {
-				user: getInfoData(["_id", "name", "email"], newUser),
-				tokens,
-			};
+		const publicKeyString = await KeyTokenService.createKeyToken({
+			userId: newUser._id,
+			publicKey,
+			privateKey,
+			refreshToken: tokens.refreshToken,
+		});
+		if (!publicKeyString) {
+			throw new InternalServerError("Can not create keys");
 		}
+
 		return {
-			code: 200,
-			metadata: null,
+			user: getInfoData(["_id", "name", "email"], newUser),
+			tokens,
 		};
 	};
 
