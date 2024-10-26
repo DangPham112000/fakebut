@@ -1,22 +1,32 @@
-import { postModel, movieModel, musicModel } from "../models/post.model.js";
-import { BadRequestError } from "../core/error.response.js";
+import {
+	postModel,
+	movieModel,
+	musicModel,
+	techModel,
+} from "../models/post.model.js";
+import {
+	BadRequestError,
+	InternalServerError,
+} from "../core/error.response.js";
 
 // define factory class to create post
 export class PostFactory {
+	static postRegistry = {}; // postTopic - classRef
+
+	static registerPostTopic = (topic, classRef) => {
+		PostFactory.postRegistry[topic] = classRef;
+	};
+
 	/**
-	 *
-	 * @param {*} topic enum ['Music', 'Movie']
+	 * @param {*} topic enum ['Music', 'Movie', 'Tech']
 	 * @param {*} payload
 	 */
 	static async create(topic, payload) {
-		switch (topic) {
-			case "Music":
-				return new Music(payload).createPost();
-			case "Movie":
-				return new Movie(payload).createPost();
-			default:
-				throw new BadRequestError(`Invalid Post topic::${topic}`);
+		const postClassRef = PostFactory.postRegistry[topic];
+		if (!postClassRef) {
+			throw new BadRequestError(`Invalid Post topic::${topic}`);
 		}
+		return new postClassRef(payload).createPost();
 	}
 }
 
@@ -40,7 +50,6 @@ class Post {
 		this.attributes = attributes;
 	}
 
-	// create new post
 	async createPost(postId) {
 		return await postModel.create({ ...this, _id: postId });
 	}
@@ -54,12 +63,12 @@ class Movie extends Post {
 			postOwner: this.postOwner,
 		});
 		if (!newMovie) {
-			throw new BadRequestError("Can not create new Movie");
+			throw new InternalServerError("Can not create new Movie post");
 		}
 
 		const newPost = await super.createPost(newMovie._id);
 		if (!newPost) {
-			throw new BadRequestError("Can not create new Post");
+			throw new InternalServerError("Can not create new Post");
 		}
 
 		return newPost;
@@ -74,14 +83,38 @@ class Music extends Post {
 			postOwner: this.postOwner,
 		});
 		if (!newMusic) {
-			throw new BadRequestError("Can not create new Music");
+			throw new InternalServerError("Can not create new Music post");
 		}
 
 		const newPost = await super.createPost(newMusic._id);
 		if (!newPost) {
-			throw new BadRequestError("Can not create new Post");
+			throw new InternalServerError("Can not create new Post");
 		}
 
 		return newPost;
 	}
 }
+
+// Define sub-class for difference post types: Tech
+class Tech extends Post {
+	async createPost() {
+		const newTech = await techModel.create({
+			...this.attributes,
+			postOwner: this.postOwner,
+		});
+		if (!newTech) {
+			throw new InternalServerError("Can not create new Tech post");
+		}
+
+		const newPost = await super.createPost(newTech._id);
+		if (!newPost) {
+			throw new InternalServerError("Can not create new Post");
+		}
+
+		return newPost;
+	}
+}
+
+PostFactory.registerPostTopic("Music", Music);
+PostFactory.registerPostTopic("Movie", Movie);
+PostFactory.registerPostTopic("Tech", Tech);

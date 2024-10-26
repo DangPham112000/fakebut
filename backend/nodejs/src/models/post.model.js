@@ -48,16 +48,17 @@ const musicSchema = new Schema(
 	}
 );
 
-// const techSchema = new Schema(
-// 	{
-// 		productName: { type: String, required: true },
-// 		inventor: { type: String, required: true },
-// 	},
-// 	{
-// 		collection: "Technologies",
-// 		timestamps: true,
-// 	}
-// );
+const techSchema = new Schema(
+	{
+		productName: { type: String, required: true },
+		inventor: { type: String, required: true },
+		postOwner: { type: Schema.Types.ObjectId, ref: "User" },
+	},
+	{
+		collection: "Technologies",
+		timestamps: true,
+	}
+);
 
 // const eduSchema = new Schema(
 // 	{
@@ -72,4 +73,5 @@ const musicSchema = new Schema(
 
 export const postModel = model(DOCUMENT_NAME, postSchema),
 	movieModel = model("Movie", movieSchema),
-	musicModel = model("Music", musicSchema);
+	musicModel = model("Music", musicSchema),
+	techModel = model("Tech", techSchema);
