@@ -31,9 +31,37 @@ export class PostFactory {
 	}
 
 	// Query //
-	static async findAllDrafts({ userId, limit = 50, skip = 0 }) {
+	static async findAllDraftsOfUser({ userId, limit = 50, skip = 0 }) {
 		const query = { postOwner: userId, isDraft: true };
-		return await PostRepo.findAllDrafts({ query, limit, skip });
+		return await PostRepo.queryPosts({ query, limit, skip });
+	}
+
+	static async findAllPublishOfUser({ userId, limit = 50, skip = 0 }) {
+		const query = { postOwner: userId, isPublished: true };
+		return await PostRepo.queryPosts({ query, limit, skip });
+	}
+
+	// Put //
+	static async publishPostByOwner({ postId, postOwner }) {
+		const isSuccess = await PostRepo.publishPostByOwner({
+			postId,
+			postOwner,
+		});
+		if (!isSuccess) {
+			throw new InternalServerError(`Publish post fail`);
+		}
+		return isSuccess;
+	}
+
+	static async unpublishPostByOwner({ postId, postOwner }) {
+		const isSuccess = await PostRepo.unpublishPostByOwner({
+			postId,
+			postOwner,
+		});
+		if (!isSuccess) {
+			throw new InternalServerError(`Unpublish post fail`);
+		}
+		return isSuccess;
 	}
 }
 
