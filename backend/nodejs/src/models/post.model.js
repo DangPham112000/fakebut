@@ -10,6 +10,7 @@ const postSchema = new Schema(
 	{
 		title: { type: String, required: true },
 		media: String,
+		summary: { type: String, required: true },
 		content: { type: String, required: true },
 		slug: String,
 		price: { type: Number, default: 0 },

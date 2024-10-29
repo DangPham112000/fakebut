@@ -9,6 +9,8 @@ router.get(
 	"/search/:keySearch",
 	asyncHandler(postController.searchPostsByUser)
 );
+router.get("", asyncHandler(postController.findAllPosts));
+router.get("/:postId", asyncHandler(postController.findPost));
 
 router.use(authenticationV2);
 

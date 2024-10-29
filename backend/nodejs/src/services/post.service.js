@@ -45,6 +45,32 @@ export class PostFactory {
 		return await PostRepo.searchPostsByUser({ keySearch });
 	}
 
+	static async findAllPosts({
+		limit = 50,
+		sort = "ctime",
+		page = 1,
+		filter = { isPublished: true },
+	}) {
+		return await PostRepo.findAllPosts({
+			limit,
+			sort,
+			page,
+			filter,
+			select: [
+				"title",
+				"summary",
+				"price",
+				"satisfied",
+				"unsatisfied",
+				"share",
+			],
+		});
+	}
+
+	static async findPost({ postId }) {
+		return await PostRepo.findPost({ postId, unselect: ["__v"] });
+	}
+
 	// Put //
 	static async publishPostByOwner({ postId, postOwner }) {
 		const isSuccess = await PostRepo.publishPostByOwner({
@@ -74,6 +100,7 @@ class Post {
 	constructor({
 		title,
 		media,
+		summary,
 		content,
 		price,
 		postOwner,
@@ -82,6 +109,7 @@ class Post {
 	}) {
 		this.title = title;
 		this.media = media;
+		this.summary = summary;
 		this.content = content;
 		this.price = price;
 		this.postOwner = postOwner;

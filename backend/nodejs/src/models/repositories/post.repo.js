@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { postModel } from "../post.model.js";
+import { getSelectData, getUnselectData } from "../../utils/index.js";
 
 const { Types } = mongoose;
 
@@ -61,6 +62,27 @@ class PostRepo {
 			.lean();
 
 		return result;
+	}
+
+	static async findAllPosts({ limit, sort, page, filter, select }) {
+		const skip = (page - 1) * limit;
+		const sortBy = sort === "ctime" ? { _id: -1 } : { _id: 1 };
+		const posts = await postModel
+			.find(filter)
+			.sort(sortBy)
+			.skip(skip)
+			.limit(limit)
+			.select(getSelectData(select))
+			.lean();
+
+		return posts;
+	}
+
+	static async findPost({ postId, unselect }) {
+		return await postModel
+			.findById(postId)
+			.select(getUnselectData(unselect))
+			.lean();
 	}
 }
 

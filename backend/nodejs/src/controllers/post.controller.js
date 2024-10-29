@@ -57,6 +57,21 @@ class PostController {
 			metatdata: await PostFactory.searchPostsByUser(req.params),
 		}).send(res);
 	}
+
+	async findAllPosts(req, res, next) {
+		new SuccessResponse({
+			message: "Find all posts success!!!",
+			metatdata: await PostFactory.findAllPosts(req.query),
+		}).send(res);
+	}
+
+	async findPost(req, res, next) {
+		const postId = req.params.postId;
+		new SuccessResponse({
+			message: `Find post ${postId} success!!!`,
+			metatdata: await PostFactory.findPost({ postId }),
+		}).send(res);
+	}
 }
 
 export default new PostController();

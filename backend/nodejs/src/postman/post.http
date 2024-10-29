@@ -1,19 +1,28 @@
 @url_dev=http://localhost:3055/v1/api
 
+### find all posts
+GET {{url_dev}}/post
+Content-Type: application/json
+x-api-key: 
 
-### search post by user
+### find post 
+GET {{url_dev}}/post/67204f2150eb3779aba3e0c5
+Content-Type: application/json
+x-api-key: 
+
+### search posts by user
 GET {{url_dev}}/post/search/MANTRA
 Content-Type: application/json
 x-api-key: 
 
-### find all user drafts
+### find all user's draft posts
 GET {{url_dev}}/post/drafts/all
 Content-Type: application/json
 x-api-key: 
 x-client-id: 671caf1631df2ea7cb9529ec
 authorization: 
 
-### find all user publish
+### find all user's published posts
 GET {{url_dev}}/post/published/all
 Content-Type: application/json
 x-api-key: 
@@ -28,19 +37,20 @@ x-client-id: 671caf1631df2ea7cb9529ec
 authorization: 
 
 {
-    "title": "Mantra is Ok",
+    "title": "Do u liek OIK",
     "media": "This is a video link",
-    "content":"OK",
-    "price": "",
+    "summary": "OIK is OK",
+    "content":"OIK is OKOIK is OK",
+    "price": "100",
     "topic": "Music",
     "attributes": {
-        "musicName": "Mantra",
-        "singer": "Jennie"
+        "musicName": "OIK",
+        "singer": "163Brace"
     }
 }
 
 ### publish post by user
-POST {{url_dev}}/post/publish/671cc32e2bf16b546abfad74
+POST {{url_dev}}/post/publish/67204f2150eb3779aba3e0c5
 Content-Type: application/json
 x-api-key: 
 x-client-id: 671caf1631df2ea7cb9529ec
