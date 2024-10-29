@@ -63,3 +63,21 @@ Content-Type: application/json
 x-api-key: 
 x-client-id: 671caf1631df2ea7cb9529ec
 authorization: 
+
+
+### update post
+PATCH {{url_dev}}/post/67204f2150eb3779aba3e0c5
+Content-Type: application/json
+x-api-key: 
+x-client-id: 671caf1631df2ea7cb9529ec
+authorization: 
+
+{
+    "title": "Do u leik OIK",
+    "price": null,
+    "topic": "Music",
+    "attributes": {
+        "musicName": null,
+        "singer": "163Brace nene"
+    }
+}

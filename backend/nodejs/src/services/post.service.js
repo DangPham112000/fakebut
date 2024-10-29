@@ -9,6 +9,7 @@ import {
 	InternalServerError,
 } from "../core/error.response.js";
 import PostRepo from "../models/repositories/post.repo.js";
+import { parseNestedObject, removeNullFromObject } from "../utils/index.js";
 
 // define factory class to create post
 export class PostFactory {
@@ -28,6 +29,14 @@ export class PostFactory {
 			throw new BadRequestError(`Invalid Post topic::${topic}`);
 		}
 		return new postClassRef(payload).createPost();
+	}
+
+	static async updatePost(topic, postId, payload) {
+		const postClassRef = PostFactory.postRegistry[topic];
+		if (!postClassRef) {
+			throw new BadRequestError(`Invalid Post topic::${topic}`);
+		}
+		return new postClassRef(payload).updatePost(postId);
 	}
 
 	// Query //
@@ -120,6 +129,14 @@ class Post {
 	async createPost(postId) {
 		return await postModel.create({ ...this, _id: postId });
 	}
+
+	async updatePost(postId, bodyUpdate) {
+		return await PostRepo.updatePostById({
+			postId,
+			bodyUpdate,
+			model: postModel,
+		});
+	}
 }
 
 // Define sub-class for difference post types: Movie
@@ -139,6 +156,24 @@ class Movie extends Post {
 		}
 
 		return newPost;
+	}
+
+	async updatePost(postId) {
+		const objectParams = removeNullFromObject(parseNestedObject(this));
+
+		if (this.attributes) {
+			const attributes = removeNullFromObject(
+				parseNestedObject(this.attributes)
+			);
+			await PostRepo.updatePostById({
+				postId,
+				bodyUpdate: attributes,
+				model: movieModel,
+			});
+		}
+
+		const updatedPost = await super.updatePost(postId, objectParams);
+		return updatedPost;
 	}
 }
 
@@ -160,6 +195,24 @@ class Music extends Post {
 
 		return newPost;
 	}
+
+	async updatePost(postId) {
+		const objectParams = removeNullFromObject(parseNestedObject(this));
+
+		if (this.attributes) {
+			const attributes = removeNullFromObject(
+				parseNestedObject(this.attributes)
+			);
+			await PostRepo.updatePostById({
+				postId,
+				bodyUpdate: attributes,
+				model: musicModel,
+			});
+		}
+
+		const updatedPost = await super.updatePost(postId, objectParams);
+		return updatedPost;
+	}
 }
 
 // Define sub-class for difference post types: Tech
@@ -179,6 +232,24 @@ class Tech extends Post {
 		}
 
 		return newPost;
+	}
+
+	async updatePost(postId) {
+		const objectParams = removeNullFromObject(parseNestedObject(this));
+
+		if (this.attributes) {
+			const attributes = removeNullFromObject(
+				parseNestedObject(this.attributes)
+			);
+			await PostRepo.updatePostById({
+				postId,
+				bodyUpdate: attributes,
+				model: techModel,
+			});
+		}
+
+		const updatedPost = await super.updatePost(postId, objectParams);
+		return updatedPost;
 	}
 }
 

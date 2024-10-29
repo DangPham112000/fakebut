@@ -46,6 +46,13 @@ class PostRepo {
 		return modifiedCount;
 	}
 
+	// update depend on model param
+	static async updatePostById({ postId, bodyUpdate, model, isNew = true }) {
+		return await model.findByIdAndUpdate(postId, bodyUpdate, {
+			new: isNew,
+		});
+	}
+
 	static async searchPostsByUser({ keySearch }) {
 		const regexSearch = new RegExp(keySearch);
 		const result = await postModel

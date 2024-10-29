@@ -16,6 +16,7 @@ router.use(authenticationV2);
 
 // POST
 router.post("", asyncHandler(postController.createPost));
+router.patch("/:postId", asyncHandler(postController.updatePost));
 router.post("/publish/:id", asyncHandler(postController.publishPostByOwner));
 router.post(
 	"/unpublish/:id",

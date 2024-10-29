@@ -12,6 +12,20 @@ class PostController {
 		}).send(res);
 	}
 
+	async updatePost(req, res, next) {
+		new SuccessResponse({
+			message: "Update post success!!!",
+			metatdata: await PostFactory.updatePost(
+				req.body.topic,
+				req.params.postId,
+				{
+					...req.body,
+					postOwner: req.user.userId,
+				}
+			),
+		}).send(res);
+	}
+
 	async publishPostByOwner(req, res, next) {
 		new SuccessResponse({
 			message: "Publish post success!!!",
