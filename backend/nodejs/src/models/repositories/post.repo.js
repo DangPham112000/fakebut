@@ -44,6 +44,24 @@ class PostRepo {
 
 		return modifiedCount;
 	}
+
+	static async searchPostsByUser({ keySearch }) {
+		const regexSearch = new RegExp(keySearch);
+		const result = await postModel
+			.find(
+				{
+					isPublished: true,
+					$text: { $search: regexSearch },
+				},
+				{
+					score: { $meta: "textScore" },
+				}
+			)
+			.sort({ score: { $meta: "textScore" } })
+			.lean();
+
+		return result;
+	}
 }
 
 export default PostRepo;

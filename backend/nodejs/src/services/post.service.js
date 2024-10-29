@@ -41,6 +41,10 @@ export class PostFactory {
 		return await PostRepo.queryPosts({ query, limit, skip });
 	}
 
+	static async searchPostsByUser({ keySearch }) {
+		return await PostRepo.searchPostsByUser({ keySearch });
+	}
+
 	// Put //
 	static async publishPostByOwner({ postId, postOwner }) {
 		const isSuccess = await PostRepo.publishPostByOwner({

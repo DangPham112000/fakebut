@@ -11,7 +11,7 @@ router.use(apiKey);
 // router.use(validatePermission("1111"));
 router.use(validatePermission("0000"));
 
-router.use("/v1/api", access);
 router.use("/v1/api/post", post);
+router.use("/v1/api", access);
 
 export default router;

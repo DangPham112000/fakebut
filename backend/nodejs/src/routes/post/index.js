@@ -5,6 +5,11 @@ import postController from "../../controllers/post.controller.js";
 
 const router = express.Router();
 
+router.get(
+	"/search/:keySearch",
+	asyncHandler(postController.searchPostsByUser)
+);
+
 router.use(authenticationV2);
 
 // POST

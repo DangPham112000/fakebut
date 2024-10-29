@@ -39,6 +39,9 @@ const postSchema = new Schema(
 	}
 );
 
+// Create index
+postSchema.index({ title: "text", content: "text" });
+
 // Post middleware: runs before .save(), .create(), ....
 postSchema.pre("save", function (next) {
 	this.slug = slugify(this.title, { lower: true });

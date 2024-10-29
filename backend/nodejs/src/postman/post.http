@@ -1,5 +1,25 @@
 @url_dev=http://localhost:3055/v1/api
 
+
+### search post by user
+GET {{url_dev}}/post/search/MANTRA
+Content-Type: application/json
+x-api-key: 
+
+### find all user drafts
+GET {{url_dev}}/post/drafts/all
+Content-Type: application/json
+x-api-key: 
+x-client-id: 671caf1631df2ea7cb9529ec
+authorization: 
+
+### find all user publish
+GET {{url_dev}}/post/published/all
+Content-Type: application/json
+x-api-key: 
+x-client-id: 671caf1631df2ea7cb9529ec
+authorization: 
+
 ### create post
 POST {{url_dev}}/post
 Content-Type: application/json
@@ -18,20 +38,6 @@ authorization:
         "singer": "Jennie"
     }
 }
-
-### find all user drafts
-GET {{url_dev}}/post/drafts/all
-Content-Type: application/json
-x-api-key: 
-x-client-id: 671caf1631df2ea7cb9529ec
-authorization: 
-
-### find all user publish
-GET {{url_dev}}/post/published/all
-Content-Type: application/json
-x-api-key: 
-x-client-id: 671caf1631df2ea7cb9529ec
-authorization: 
 
 ### publish post by user
 POST {{url_dev}}/post/publish/671cc32e2bf16b546abfad74

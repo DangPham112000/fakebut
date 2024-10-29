@@ -50,6 +50,13 @@ class PostController {
 			}),
 		}).send(res);
 	}
+
+	async searchPostsByUser(req, res, next) {
+		new SuccessResponse({
+			message: "Search posts success!!!",
+			metatdata: await PostFactory.searchPostsByUser(req.params),
+		}).send(res);
+	}
 }
 
 export default new PostController();
