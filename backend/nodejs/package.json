@@ -6,7 +6,9 @@
 	"license": "MIT",
 	"scripts": {
 		"dev": "set DEBUG=express-session & NODE_ENV=dev nodemon server",
-		"pro": "set DEBUG=express-session & NODE_ENV=pro node server"
+		"pro": "set DEBUG=express-session & NODE_ENV=pro node server",
+		"test": "vitest --ui --config build/vite/vitest.config.js",
+		"coverage": "vitest run --coverage --config build/vite/vitest.config.js && http-server ./.tmp/coverage/ -o -c-1"
 	},
 	"dependencies": {
 		"bcrypt": "^5.1.1",
@@ -24,9 +26,13 @@
 		"slugify": "^1.6.6"
 	},
 	"devDependencies": {
+		"@vitest/coverage-istanbul": "2.1.4",
+		"@vitest/ui": "2.1.4",
 		"compression": "^1.7.4",
 		"helmet": "^8.0.0",
+		"http-server": "^14.1.1",
 		"morgan": "^1.10.0",
-		"nodemon": "^3.1.0"
+		"nodemon": "^3.1.0",
+		"vitest": "^2.1.4"
 	}
 }

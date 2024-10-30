@@ -23,19 +23,6 @@ export const removeNullFromObject = (obj) => {
 	return result;
 };
 
-/**
- *
- * @param {*} obj = {
- *  c: {
- *      e: 1,
- *      f: 2
- *  }
- * }
- * @returns {
- *  'c.e': 1,
- *  'c.f': 2
- * };
- */
 export const parseNestedObject = (obj, parentKey = "", result = {}) => {
 	for (let key in obj) {
 		if (obj.hasOwnProperty(key)) {
