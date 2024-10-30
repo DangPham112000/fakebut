@@ -26,9 +26,15 @@ This social media created for learning
 -   PATCH:
     -   Update fields in document, keep other fields as the previous
 
+## Note
+
+-   Discount:
+    -   Code is unique in a creator
+    -   Code can be duplicated among creators
+
 ## Todo
 
--
+-   Discount: getAllDiscountCodesOfCreator => how about inactive discount
 
 ## Start whole project
 
