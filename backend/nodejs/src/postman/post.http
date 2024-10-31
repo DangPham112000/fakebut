@@ -37,20 +37,46 @@ x-client-id: 671caf1631df2ea7cb9529ec
 authorization: 
 
 {
-    "title": "Do u liek OIK",
+    "title": "Cap doi dep nhat OK",
     "media": "This is a video link",
-    "summary": "OIK is OK",
-    "content":"OIK is OKOIK is OK",
-    "price": "100",
-    "topic": "Music",
+    "summary": "Cap doi dep nhat rat ok",
+    "content":"okokokokokokokokokok",
+    "price": "60",
+    "topic": "Movie",
     "attributes": {
-        "musicName": "OIK",
-        "singer": "163Brace"
+        "movieName": "Cap doi dep nhat",
+        "director": "HKT"
     }
 }
 
+# {
+#     "title": "Giay ghi chu tam nguyen OK",
+#     "media": "This is a video link",
+#     "summary": "Giay ghi chu tam nguyen xai rat ok",
+#     "content":"okokokokokokokokokok",
+#     "price": "30",
+#     "topic": "Tech",
+#     "attributes": {
+#         "productName": "Giay ghi chu tam nguyen",
+#         "inventor": "unknown"
+#     }
+# }
+
+# {
+#     "title": "Do u liek OIK",
+#     "media": "This is a video link",
+#     "summary": "OIK is OK",
+#     "content":"OIK is OKOIK is OK",
+#     "price": "100",
+#     "topic": "Music",
+#     "attributes": {
+#         "musicName": "OIK",
+#         "singer": "163Brace"
+#     }
+# }
+
 ### publish post by user
-POST {{url_dev}}/post/publish/67204f2150eb3779aba3e0c5
+POST {{url_dev}}/post/publish/6722e7e1b14316be70bd2269
 Content-Type: application/json
 x-api-key: 
 x-client-id: 671caf1631df2ea7cb9529ec

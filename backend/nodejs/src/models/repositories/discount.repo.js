@@ -6,6 +6,7 @@ export default class discountRepo {
 		const {
 			name,
 			description,
+			type,
 			value,
 			code,
 			startDate,
@@ -20,25 +21,24 @@ export default class discountRepo {
 			appliesTo,
 			postIds,
 		} = payload;
-		return await discountModel
-			.create({
-				name,
-				description,
-				value,
-				code,
-				startDate: new Date(startDate),
-				endDate: new Date(endDate),
-				maxUses,
-				usesCount,
-				usersUsed,
-				maxUsesPerUser,
-				minOrderValue: minOrderValue || 0,
-				creatorId,
-				isActive,
-				appliesTo,
-				postIds: appliesTo === "all" ? [] : postIds,
-			})
-			.lean();
+		return await discountModel.create({
+			name,
+			description,
+			type,
+			value,
+			code,
+			startDate: new Date(startDate),
+			endDate: new Date(endDate),
+			maxUses,
+			usesCount,
+			usersUsed,
+			maxUsesPerUser,
+			minOrderValue: minOrderValue || 0,
+			creatorId,
+			isActive,
+			appliesTo,
+			postIds: appliesTo === "all" ? [] : postIds,
+		});
 	}
 	static async findDiscount(code, creatorId) {
 		return await discountModel.findOne({ code, creatorId }).lean();

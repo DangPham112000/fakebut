@@ -77,7 +77,7 @@ export class PostFactory {
 	}
 
 	static async findPost({ postId }) {
-		return await PostRepo.findPost({ postId, unselect: ["__v"] });
+		return await PostRepo.findPostUnselect({ postId, unselect: ["__v"] });
 	}
 
 	// Put //

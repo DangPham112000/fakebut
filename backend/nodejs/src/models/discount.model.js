@@ -12,7 +12,7 @@ var discountSchema = new Schema(
 		description: { type: String, require: true },
 		type: {
 			type: String,
-			default: "fixed_amount",
+			required: true,
 			enum: ["fixed_amount", "percentage"],
 		},
 		value: { type: Number, required: true }, //if type = fixed_amount then 10.000 => 10k vnd, if type = percentage then 10 => 10%

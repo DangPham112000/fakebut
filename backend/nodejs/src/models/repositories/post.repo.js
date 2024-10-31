@@ -85,10 +85,17 @@ class PostRepo {
 		return posts;
 	}
 
-	static async findPost({ postId, unselect }) {
+	static async findPostUnselect({ postId, unselect }) {
 		return await postModel
 			.findById(postId)
 			.select(getUnselectData(unselect))
+			.lean();
+	}
+
+	static async findPostSelect({ postId, select }) {
+		return await postModel
+			.findById(postId)
+			.select(getSelectData(select))
 			.lean();
 	}
 }

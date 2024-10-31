@@ -5,15 +5,15 @@ import discountController from "../../controllers/discount.controller.js";
 
 const router = express.Router();
 
-router.post("/amount", asyncHandler(discountController.getDiscountAmount));
 router.get(
-	"/list-posts",
+	"/list-post",
 	asyncHandler(discountController.getAllPostsAvailForDiscountCode)
 );
+router.post("/amount", asyncHandler(discountController.getDiscountAmount));
 
 router.use(authenticationV2);
 
-router.post("", asyncHandler(discountController.createDiscountCode));
 router.get("", asyncHandler(discountController.getAllDiscountCodesOfCreator));
+router.post("", asyncHandler(discountController.createDiscountCode));
 
 export default router;

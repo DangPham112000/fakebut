@@ -17,7 +17,7 @@ export default class DiscountService {
 			throw new BadRequestError("Invalid date");
 		}
 
-		if (type === "percentage" && value <= 100 && value > 0) {
+		if (type === "percentage" && (+value > 100 || +value < 0)) {
 			throw new BadRequestError("Invalid value");
 		}
 
@@ -93,7 +93,7 @@ export default class DiscountService {
 		return discountCodes;
 	}
 
-	static async getDiscountAmount({ code, creatorId, posts }) {
+	static async getDiscountAmount({ code, creatorId, postIds }) {
 		const foundDiscount = await discountRepo.findDiscount(code, creatorId);
 		if (!foundDiscount || !foundDiscount.isActive) {
 			throw new NotFoundError("Discount does not exist");
@@ -121,15 +121,22 @@ export default class DiscountService {
 		if (maxUsesPerUser > 0) {
 		}
 
-		// TODO: check post can be applied
+		const posts = [];
+		for (const postId of postIds) {
+			const post = await PostRepo.findPostSelect({
+				postId,
+				select: ["price"],
+			});
+			posts.push(post);
+		}
 
-		const totalOrder = posts.reduce(acc, (post) => acc + post.price, 0);
+		const totalOrder = posts.reduce((acc, post) => acc + post.price, 0);
 		if (minOrderValue > 0 && totalOrder < minOrderValue) {
 			throw new BadRequestError("Order is not satisty the condition");
 		}
 
 		const discountAmount =
-			type === "fixed_amount" ? value : totalOrder * (value / 100);
+			type === "fixed_amount" ? value : (totalOrder * value) / 100;
 
 		return {
 			totalPrice: totalOrder,

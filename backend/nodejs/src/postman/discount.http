@@ -1,14 +1,53 @@
 @url_dev=http://localhost:3055/v1/api
 
-## 
+### Get list post with a discount
 
-POST {{url_dev}}/discount/
+GET {{url_dev}}/discount/list-post?code=SPL-004&creatorId=671caf1631df2ea7cb9529ec
+Content-Type: application/json
+x-api-key: 
+
+### Get amount discount of order
+
+POST {{url_dev}}/discount/amount
+Content-Type: application/json
+x-api-key: 
+
+{
+    "code": "SPL-004", 
+    "creatorId": "671caf1631df2ea7cb9529ec", 
+    "postIds": ["6722e860b14316be70bd226f", "6722e7e1b14316be70bd2269"]
+}
+
+### Get all discount code of a creator
+
+GET {{url_dev}}/discount
+Content-Type: application/json
+x-api-key: 
+x-client-id: 671caf1631df2ea7cb9529ec
+authorization: 
+
+### Create discount code by a creator
+
+POST {{url_dev}}/discount
 Content-Type: application/json
 x-api-key: 
 x-client-id: 671caf1631df2ea7cb9529ec
 authorization: 
 
 {
-
+    "name": "super sale ne",
+	"description": "this is super sale 102",
+    "type": "percentage",
+	"value": 15,
+	"code": "SPL-004",
+	"startDate": "2024-11-02",
+	"endDate": "2024-11-03",
+	"maxUses": 100,
+	"usesCount": 0,
+	"usersUsed": [],
+	"maxUsesPerUser": 10,
+	"minOrderValue": 1,
+	"isActive": true,
+	"appliesTo": "specific",
+	"postIds": ["6722e860b14316be70bd226f", "6722e7e1b14316be70bd2269"]
 }
-
