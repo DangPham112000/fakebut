@@ -6,7 +6,7 @@ Content-Type: application/json
 x-api-key: 2f9ab30e22b0312538ce881e36527a08cd5c88e20db07249aad97565ad16912e47cd83d4c4526d1af807c7cd6d49d215451896e2a301bdbc55912b6a8d048708
 
 {
-    "email": "haidngpham112000+003@gmail.com",
+    "email": "haidngpham112000+004@gmail.com",
     "password": "pass1234"
 }
 
@@ -16,8 +16,8 @@ Content-Type: application/json
 x-api-key: 
 
 {
-    "name": "haidngpham112000+003",
-    "email": "haidngpham112000+003@gmail.com",
+    "name": "haidngpham112000+005",
+    "email": "haidngpham112000+005@gmail.com",
     "password": "pass1234"
 }
 

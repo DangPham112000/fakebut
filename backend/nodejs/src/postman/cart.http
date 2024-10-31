@@ -4,14 +4,14 @@
 GET {{url_dev}}/cart
 Content-Type: application/json
 x-api-key: 
-x-client-id: 671caf1631df2ea7cb9529ec
+x-client-id: 67239ba027f9a785bb260f45
 authorization: 
 
 ### Add to cart
 POST {{url_dev}}/cart/add
 Content-Type: application/json
 x-api-key: 
-x-client-id: 671caf1631df2ea7cb9529ec
+x-client-id: 67239ba027f9a785bb260f45
 authorization: 
 
 {
@@ -22,9 +22,9 @@ authorization:
 POST {{url_dev}}/cart/remove
 Content-Type: application/json
 x-api-key: 
-x-client-id: 671caf1631df2ea7cb9529ec
+x-client-id: 67239ba027f9a785bb260f45
 authorization: 
 
 {
-    "postId": "67204f2150eb3779aba3e0c5"
+    "postId": "6722e860b14316be70bd226f"
 }

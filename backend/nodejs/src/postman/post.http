@@ -33,45 +33,45 @@ authorization:
 POST {{url_dev}}/post
 Content-Type: application/json
 x-api-key: 
-x-client-id: 671caf1631df2ea7cb9529ec
+x-client-id: 6723989527f9a785bb260f26
 authorization: 
 
+# {
+#     "title": "Normal no more is new trending",
+#     "media": "This is a video link",
+#     "summary": "Normal no more rat ok",
+#     "content":"Normal no more okokokokokokokokokok",
+#     "price": 15,
+#     "topic": "Movie",
+#     "attributes": {
+#         "movieName": "Normal no more",
+#         "director": "Black Shadow"
+#     }
+# }
+
 {
-    "title": "Cap doi dep nhat OK",
+    "title": "Poker Face OK",
     "media": "This is a video link",
-    "summary": "Cap doi dep nhat rat ok",
-    "content":"okokokokokokokokokok",
-    "price": "60",
-    "topic": "Movie",
+    "summary": "Poker Face xai rat ok",
+    "content":"Poker Face okokokokokokokokokok",
+    "price": 17,
+    "topic": "Tech",
     "attributes": {
-        "movieName": "Cap doi dep nhat",
-        "director": "HKT"
+        "productName": "Poker Face",
+        "inventor": "Lady Gaga"
     }
 }
 
 # {
-#     "title": "Giay ghi chu tam nguyen OK",
+#     "title": "Take You To Hell is crazy",
 #     "media": "This is a video link",
-#     "summary": "Giay ghi chu tam nguyen xai rat ok",
-#     "content":"okokokokokokokokokok",
-#     "price": "30",
-#     "topic": "Tech",
-#     "attributes": {
-#         "productName": "Giay ghi chu tam nguyen",
-#         "inventor": "unknown"
-#     }
-# }
-
-# {
-#     "title": "Do u liek OIK",
-#     "media": "This is a video link",
-#     "summary": "OIK is OK",
-#     "content":"OIK is OKOIK is OK",
-#     "price": "100",
+#     "summary": "Take You To Hell is OK",
+#     "content":"Take You To Hell is more than OK",
+#     "price": 50,
 #     "topic": "Music",
 #     "attributes": {
-#         "musicName": "OIK",
-#         "singer": "163Brace"
+#         "musicName": "Take You To Hell",
+#         "singer": "Ava Max"
 #     }
 # }
 

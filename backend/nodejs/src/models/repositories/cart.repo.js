@@ -1,6 +1,10 @@
 import cartModel from "../cart.model.js";
 
 export default class CartRepo {
+	static async findCartById({ cartId }) {
+		return await cartModel.findOne({ _id: cartId, state: "active" }).lean();
+	}
+
 	static async createUserCart({ userId, postId }) {
 		return await cartModel.create({
 			owner: userId,

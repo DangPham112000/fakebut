@@ -27,14 +27,14 @@ authorization:
 POST {{url_dev}}/discount
 Content-Type: application/json
 x-api-key: 
-x-client-id: 671caf1631df2ea7cb9529ec
+x-client-id: 6723989527f9a785bb260f26
 authorization: 
 
 {
-    "name": "super sale ne",
+    "name": "004 super sale ne",
 	"description": "this is super sale 102",
     "type": "percentage",
-	"value": 15,
+	"value": 20,
 	"code": "SPL-004",
 	"startDate": "2024-11-02",
 	"endDate": "2024-11-03",
@@ -45,5 +45,5 @@ authorization:
 	"minOrderValue": 1,
 	"isActive": true,
 	"appliesTo": "specific",
-	"postIds": ["6722e860b14316be70bd226f", "6722e7e1b14316be70bd2269"]
+	"postIds": ["67239a4c27f9a785bb260f3a", "67239a1927f9a785bb260f34", "672399ab27f9a785bb260f2e"]
 }

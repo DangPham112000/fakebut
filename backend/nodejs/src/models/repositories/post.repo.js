@@ -18,8 +18,8 @@ class PostRepo {
 
 	static async publishPostByOwner({ postId, postOwner }) {
 		const foundPost = await postModel.findOne({
-			_id: new Types.ObjectId(postId),
-			postOwner: new Types.ObjectId(postOwner),
+			_id: postId,
+			postOwner: postOwner,
 		});
 		if (!foundPost) return null;
 
@@ -33,8 +33,8 @@ class PostRepo {
 
 	static async unpublishPostByOwner({ postId, postOwner }) {
 		const foundPost = await postModel.findOne({
-			_id: new Types.ObjectId(postId),
-			postOwner: new Types.ObjectId(postOwner),
+			_id: postId,
+			postOwner: postOwner,
 		});
 		if (!foundPost) return null;
 
@@ -97,6 +97,14 @@ class PostRepo {
 			.findById(postId)
 			.select(getSelectData(select))
 			.lean();
+	}
+
+	static async findPostsByIds({ postIds }) {
+		return await Promise.all(
+			postIds.map((postId) =>
+				this.findPostUnselect({ postId, unselect: ["__v"] })
+			)
+		);
 	}
 }
 
