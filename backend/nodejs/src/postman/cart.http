@@ -1,0 +1,30 @@
+@url_dev=http://localhost:3055/v1/api
+
+### Get user cart
+GET {{url_dev}}/cart
+Content-Type: application/json
+x-api-key: 
+x-client-id: 671caf1631df2ea7cb9529ec
+authorization: 
+
+### Add to cart
+POST {{url_dev}}/cart/add
+Content-Type: application/json
+x-api-key: 
+x-client-id: 671caf1631df2ea7cb9529ec
+authorization: 
+
+{
+    "postId": "6722e860b14316be70bd226f"
+}
+
+### Remove from cart
+POST {{url_dev}}/cart/remove
+Content-Type: application/json
+x-api-key: 
+x-client-id: 671caf1631df2ea7cb9529ec
+authorization: 
+
+{
+    "postId": "67204f2150eb3779aba3e0c5"
+}

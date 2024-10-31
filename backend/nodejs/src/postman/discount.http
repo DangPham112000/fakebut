@@ -1,13 +1,11 @@
 @url_dev=http://localhost:3055/v1/api
 
 ### Get list post with a discount
-
 GET {{url_dev}}/discount/list-post?code=SPL-004&creatorId=671caf1631df2ea7cb9529ec
 Content-Type: application/json
 x-api-key: 
 
 ### Get amount discount of order
-
 POST {{url_dev}}/discount/amount
 Content-Type: application/json
 x-api-key: 
@@ -19,7 +17,6 @@ x-api-key:
 }
 
 ### Get all discount code of a creator
-
 GET {{url_dev}}/discount
 Content-Type: application/json
 x-api-key: 
@@ -27,7 +24,6 @@ x-client-id: 671caf1631df2ea7cb9529ec
 authorization: 
 
 ### Create discount code by a creator
-
 POST {{url_dev}}/discount
 Content-Type: application/json
 x-api-key: 
