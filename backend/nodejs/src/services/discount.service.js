@@ -125,7 +125,7 @@ export default class DiscountService {
 		for (const postId of postIds) {
 			const post = await PostRepo.findPostSelect({
 				postId,
-				select: ["price"],
+				select: ["title", "price"],
 			});
 			posts.push(post);
 		}
@@ -139,6 +139,8 @@ export default class DiscountService {
 			type === "fixed_amount" ? value : (totalOrder * value) / 100;
 
 		return {
+			posts,
+			discountValue: value + (type === "percentage" ? "%" : "$"),
 			totalPrice: totalOrder,
 			discountAmount,
 			finalPrice: totalOrder - discountAmount,

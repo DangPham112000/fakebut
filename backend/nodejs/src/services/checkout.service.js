@@ -2,6 +2,7 @@ import { BadRequestError } from "../core/error.response.js";
 import CartRepo from "../models/repositories/cart.repo.js";
 import PostRepo from "../models/repositories/post.repo.js";
 import DiscountService from "./discount.service.js";
+import { getInfoData } from "../utils/index.js";
 
 export default class CheckoutService {
 	/*
@@ -32,6 +33,9 @@ export default class CheckoutService {
 		for (const order of ordersPerCreators) {
 			const { creatorId, discountCode, postIds } = order;
 			const checkoutOrder = {
+				creatorId,
+				discountCode,
+				posts: [],
 				totalPrice: 0,
 				feeShip: 0, // TODO: TBU feeship
 				discountAmount: 0,
@@ -39,22 +43,31 @@ export default class CheckoutService {
 			};
 
 			if (discountCode) {
-				const { totalPrice, discountAmount, finalPrice } =
-					await DiscountService.getDiscountAmount({
-						code: discountCode,
-						creatorId,
-						postIds,
-					});
+				const {
+					posts,
+					discountValue,
+					totalPrice,
+					discountAmount,
+					finalPrice,
+				} = await DiscountService.getDiscountAmount({
+					code: discountCode,
+					creatorId,
+					postIds,
+				});
 
+				checkoutOrder.posts = posts;
+				checkoutOrder.discountValue = discountValue;
 				checkoutOrder.totalPrice = totalPrice;
 				checkoutOrder.discountAmount = discountAmount;
 				checkoutOrder.totalCheckout = finalPrice;
 			} else {
 				const posts = await PostRepo.findPostsByIds({ postIds });
-				const totalPrice = posts.reduce(
-					(acc, post) => acc + post.price,
-					0
-				);
+				const totalPrice = posts.reduce((acc, post) => {
+					checkoutOrder.posts.push(
+						getInfoData(["postId", "title", "price"], post)
+					);
+					return acc + post.price;
+				}, 0);
 				checkoutOrder.totalPrice += totalPrice;
 				checkoutOrder.totalCheckout += totalPrice;
 			}
