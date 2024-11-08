@@ -1,8 +1,12 @@
-import { BadRequestError } from "../core/error.response.js";
+import {
+	BadRequestError,
+	InternalServerError,
+} from "../core/error.response.js";
 import CartRepo from "../models/repositories/cart.repo.js";
 import PostRepo from "../models/repositories/post.repo.js";
 import DiscountService from "./discount.service.js";
 import { getInfoData } from "../utils/index.js";
+import OrderRepo from "../models/repositories/order.repo.js";
 
 export default class CheckoutService {
 	/*
@@ -99,5 +103,36 @@ export default class CheckoutService {
 			checkoutOrders,
 			finalCheckout,
 		};
+	}
+
+	static async orderByUser({
+		cartId,
+		userId,
+		ordersPerCreators,
+		payment = {},
+	}) {
+		const postIds = ordersPerCreators.flatMap((order) => order.postIds);
+
+		const { finalCheckout } = await this.checkoutReview({
+			cartId,
+			userId,
+			ordersPerCreators,
+		});
+
+		const newOrder = await OrderRepo.createUserOrder({
+			userId,
+			postIds,
+			checkout: finalCheckout,
+			payment,
+		});
+
+		if (!newOrder) {
+			throw new InternalServerError("Can not create new order");
+		}
+
+		// asynchronously remove product in user cart
+		// postIds.map((postId) => CartService.removeFromCart({ userId, postId })); // Currently, logic posts in user cart is not link with orders in checkout
+
+		return newOrder;
 	}
 }

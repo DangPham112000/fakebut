@@ -26,3 +26,34 @@ authorization:
         }
     ]
 }
+
+### Finish checkout
+POST {{url_dev}}/checkout/finish
+Content-Type: application/json
+x-api-key: 
+x-client-id: 67239ba027f9a785bb260f45
+authorization: 
+
+{
+    "cartId": "67239be627f9a785bb260f4b",
+    "ordersPerCreators": [
+        {
+            "creatorId": "671caf1631df2ea7cb9529ec",
+            "discountCode": "SPL-001",
+            "postIds": ["6722e860b14316be70bd226f", "6722e7e1b14316be70bd2269"]
+        },
+        {
+            "creatorId": "6723989527f9a785bb260f26",
+            "discountCode": "SPL-004",
+            "postIds": ["67239a1927f9a785bb260f34", "672399ab27f9a785bb260f2e"]
+        },
+        {
+            "creatorId": "67090b66d9d9d3a681149940",
+            "postIds": ["671610d8f69797ce34dd834f"]
+        }
+    ],
+    "payment": {
+        "MOMO": "02937656",
+        "amount": 4231
+    }
+}

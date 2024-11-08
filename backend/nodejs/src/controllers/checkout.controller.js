@@ -11,6 +11,16 @@ class CheckoutController {
 			}),
 		}).send(res);
 	}
+
+	async finishCheckout(req, res, next) {
+		new SuccessResponse({
+			message: "Your checkout compelete",
+			metatdata: await CheckoutService.orderByUser({
+				...req.body,
+				userId: req.user.userId,
+			}),
+		}).send(res);
+	}
 }
 
 export default new CheckoutController();
