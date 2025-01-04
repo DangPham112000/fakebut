@@ -4,11 +4,6 @@ import cors from "cors";
 import session from "express-session";
 import redisStore from "./dbs/redis.js";
 import error from "../middleware/error.js";
-// import home from "../routes/home.js";
-// import login from "../routes/login.js";
-// import register from "../routes/register.js";
-// import authen from "../routes/authen.js";
-// import logout from "../routes/logout.js";
 import morgan from "morgan";
 import helmet from "helmet";
 import compression from "compression";
@@ -53,12 +48,6 @@ import { checkOverload } from "./helpers/check.connect.js";
 
 // init router
 app.use(router);
-
-// app.use("/login", login);
-// app.use("/authen", authen);
-// app.use("/logout", logout);
-// app.use("/register", register);
-// app.use("/", home);
 
 // handling errors
 

@@ -1,11 +1,11 @@
 import express from "express";
-import { authenticationV2 } from "../../auth/authUtils.js";
+import { authentication } from "../../auth/authUtils.js";
 import asyncHandler from "../../helpers/asyncHandler.js";
 import checkoutController from "../../controllers/checkout.controller.js";
 
 const router = express.Router();
 
-router.use(authenticationV2);
+router.use(asyncHandler(authentication));
 
 router.post("/review", asyncHandler(checkoutController.checkoutReview));
 router.post("/finish", asyncHandler(checkoutController.finishCheckout));

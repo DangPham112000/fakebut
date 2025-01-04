@@ -30,16 +30,7 @@ class AccessController {
 	handleRefreshToken = async (req, res, next) => {
 		new SuccessResponse({
 			message: "Update token success",
-			metatdata: await AccessService.handleRefreshToken(
-				req.body.refreshToken
-			),
-		}).send(res);
-	};
-
-	handleRefreshTokenV2 = async (req, res, next) => {
-		new SuccessResponse({
-			message: "Update token success",
-			metatdata: await AccessService.handleRefreshTokenV2({
+			metatdata: await AccessService.handleRefreshToken({
 				refreshToken: req.refreshToken,
 				user: req.user,
 				keyStore: req.keyStore,

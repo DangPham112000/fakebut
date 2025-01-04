@@ -1,5 +1,5 @@
 import express from "express";
-import { authentication, authenticationV2 } from "../../auth/authUtils.js";
+import { authentication } from "../../auth/authUtils.js";
 import asyncHandler from "../../helpers/asyncHandler.js";
 import postController from "../../controllers/post.controller.js";
 
@@ -12,7 +12,7 @@ router.get(
 router.get("", asyncHandler(postController.findAllPosts));
 router.get("/:postId", asyncHandler(postController.findPost));
 
-router.use(authenticationV2);
+router.use(asyncHandler(authentication));
 
 // POST
 router.post("", asyncHandler(postController.createPost));

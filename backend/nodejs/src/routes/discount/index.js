@@ -1,5 +1,5 @@
 import express from "express";
-import { authenticationV2 } from "../../auth/authUtils.js";
+import { authentication } from "../../auth/authUtils.js";
 import asyncHandler from "../../helpers/asyncHandler.js";
 import discountController from "../../controllers/discount.controller.js";
 
@@ -11,7 +11,7 @@ router.get(
 );
 router.post("/amount", asyncHandler(discountController.getDiscountAmount));
 
-router.use(authenticationV2);
+router.use(asyncHandler(authentication));
 
 router.get("", asyncHandler(discountController.getAllDiscountCodesOfCreator));
 router.post("", asyncHandler(discountController.createDiscountCode));
