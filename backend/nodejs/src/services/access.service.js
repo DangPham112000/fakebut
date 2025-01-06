@@ -1,10 +1,6 @@
 import bcrypt from "bcrypt";
 import KeyTokenService from "./keyToken.service.js";
-import {
-	createTokenPair,
-	genKeyPairRSA,
-	verifyJWT,
-} from "../auth/authUtils.js";
+import { createTokenPair, genKeyPairRSA } from "../auth/authUtils.js";
 import { getInfoData } from "../utils/index.js";
 import {
 	AuthFailureError,
@@ -37,11 +33,7 @@ class AccessService {
 
 		const { _id: userId } = foundUser;
 
-		const tokens = await createTokenPair(
-			{ userId, email },
-			publicKey,
-			privateKey
-		);
+		const tokens = createTokenPair({ userId, email }, privateKey);
 
 		await KeyTokenService.createKeyToken({
 			userId,
@@ -80,9 +72,8 @@ class AccessService {
 		console.log({ privateKey, publicKey });
 
 		// create a token pair
-		const tokens = await createTokenPair(
+		const tokens = createTokenPair(
 			{ userId: newUser._id, email },
-			publicKey,
 			privateKey
 		);
 		console.log("Create tokens success:: ", tokens);
@@ -125,11 +116,11 @@ class AccessService {
 			throw new AuthFailureError("User is deleted or never exist");
 		}
 
-		const tokens = await createTokenPair(
+		const tokens = createTokenPair(
 			{ userId: foundUser._id, email },
-			keyStore.publicKey,
 			keyStore.privateKey
 		);
+
 		await keyStore.updateOne({
 			$set: {
 				refreshToken: tokens.refreshToken,

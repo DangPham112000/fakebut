@@ -1,6 +1,5 @@
 import jwt from "jsonwebtoken";
 import crypto from "crypto";
-import asyncHandler from "../helpers/asyncHandler.js";
 import { AuthFailureError, NotFoundError } from "../core/error.response.js";
 import KeyTokenService from "../services/keyToken.service.js";
 
@@ -11,28 +10,21 @@ const HEADER = {
 	REFRESHTOKEN: "x-rtoken-id",
 };
 
-export const createTokenPair = async (payload, publicKey, privateKey) => {
+export const createTokenPair = (payload, privateKey) => {
 	try {
-		const accessToken = await jwt.sign(payload, privateKey, {
+		const accessToken = jwt.sign(payload, privateKey, {
 			algorithm: "RS256",
-			expiresIn: "2 days",
+			// expiresIn: "2 days",
+			expiresIn: "60000", // 1min
 		});
-		const refreshToken = await jwt.sign(payload, privateKey, {
+		const refreshToken = jwt.sign(payload, privateKey, {
 			algorithm: "RS256",
 			expiresIn: "7 days",
 		});
 
-		jwt.verify(accessToken, publicKey, (err, decode) => {
-			if (err) {
-				console.log("error verify: ", err);
-			} else {
-				console.log("decode verify: ", decode);
-			}
-		});
-
 		return { accessToken, refreshToken };
 	} catch (error) {
-		throw error;
+		throw new Error("jwt.sign got error");
 	}
 };
 
@@ -75,21 +67,21 @@ export const authentication = async (req, res, next) => {
 	}
 };
 
-export const verifyJWT = (token, publicKey) => {
-	return jwt.verify(token, publicKey);
-};
-
 export const genKeyPairRSA = () => {
-	const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
-		modulusLength: 4096,
-		publicKeyEncoding: {
-			type: "pkcs1",
-			format: "pem",
-		},
-		privateKeyEncoding: {
-			type: "pkcs1",
-			format: "pem",
-		},
-	});
-	return { privateKey, publicKey };
+	try {
+		const { privateKey, publicKey } = crypto.generateKeyPairSync("rsa", {
+			modulusLength: 4096,
+			publicKeyEncoding: {
+				type: "pkcs1",
+				format: "pem",
+			},
+			privateKeyEncoding: {
+				type: "pkcs1",
+				format: "pem",
+			},
+		});
+		return { privateKey, publicKey };
+	} catch (error) {
+		throw new Error("crypto.generateKeyPairSync got error");
+	}
 };
