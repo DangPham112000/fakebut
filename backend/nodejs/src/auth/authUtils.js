@@ -30,10 +30,14 @@ export const createTokenPair = (payload, privateKey) => {
 
 export const authentication = async (req, res, next) => {
 	const userId = req.headers[HEADER.CLIENT_ID];
-	if (!userId) throw new AuthFailureError("Invalid request");
+	if (!userId) {
+		throw new AuthFailureError("Invalid request");
+	}
 
 	const keyStore = await KeyTokenService.findByUserId(userId);
-	if (!keyStore) throw new NotFoundError("Not found keyStore");
+	if (!keyStore) {
+		throw new NotFoundError("Not found any keys and token match this user");
+	}
 
 	const refreshToken = req.headers[HEADER.REFRESHTOKEN];
 	if (refreshToken) {
@@ -42,7 +46,6 @@ export const authentication = async (req, res, next) => {
 			if (userId !== decodeUser.userId) {
 				throw new AuthFailureError("Invalid userId");
 			}
-			req.keyStore = keyStore;
 			req.user = decodeUser; // {userId, email}
 			req.refreshToken = refreshToken;
 			return next();
@@ -59,7 +62,6 @@ export const authentication = async (req, res, next) => {
 		if (userId !== decodeUser.userId) {
 			throw new AuthFailureError("Invalid userId");
 		}
-		req.keyStore = keyStore;
 		req.user = decodeUser; // {userId, email}
 		return next();
 	} catch (error) {

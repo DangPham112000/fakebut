@@ -22,8 +22,8 @@ class AccessController {
 
 	logout = async (req, res, next) => {
 		new SuccessResponse({
-			message: "logout success",
-			metatdata: await AccessService.logout(req.keyStore),
+			message: "Logout success",
+			metatdata: await AccessService.logout(req.user),
 		}).send(res);
 	};
 
@@ -33,7 +33,6 @@ class AccessController {
 			metatdata: await AccessService.handleRefreshToken({
 				refreshToken: req.refreshToken,
 				user: req.user,
-				keyStore: req.keyStore,
 			}),
 		}).send(res);
 	};

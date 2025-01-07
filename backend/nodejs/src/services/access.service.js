@@ -94,14 +94,15 @@ class AccessService {
 		};
 	};
 
-	static logout = async (keyStore) => {
-		const delKey = await KeyTokenService.removeKeyById(keyStore._id);
-		console.log({ delKey });
+	static logout = async (user) => {
+		const delKey = await KeyTokenService.removeByUserId(user.userId);
 		return delKey;
 	};
 
-	static handleRefreshToken = async ({ refreshToken, user, keyStore }) => {
+	static handleRefreshToken = async ({ refreshToken, user }) => {
 		const { userId, email } = user;
+		const keyStore = await KeyTokenService.findByUserId(userId);
+
 		if (keyStore.refreshTokensUsed.includes(refreshToken)) {
 			await KeyTokenService.removeByUserId(userId);
 			throw new ForbiddenError("Something wrong happen. Pls relogin");
@@ -116,23 +117,20 @@ class AccessService {
 			throw new AuthFailureError("User is deleted or never exist");
 		}
 
-		const tokens = createTokenPair(
+		const newTokens = createTokenPair(
 			{ userId: foundUser._id, email },
 			keyStore.privateKey
 		);
 
-		await keyStore.updateOne({
-			$set: {
-				refreshToken: tokens.refreshToken,
-			},
-			$addToSet: {
-				refreshTokensUsed: refreshToken,
-			},
-		});
+		await KeyTokenService.updateRefreshToken(
+			userId,
+			newTokens.refreshToken,
+			refreshToken
+		);
 
 		return {
 			user,
-			tokens,
+			tokens: newTokens,
 		};
 	};
 }

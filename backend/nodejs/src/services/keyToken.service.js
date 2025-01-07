@@ -31,29 +31,20 @@ class KeyTokenService {
 	};
 
 	static findByUserId = async (userId) => {
-		return await keyTokenModel.findOne({
-			user: new Types.ObjectId(userId),
-		});
-	};
-
-	static removeKeyById = async (id) => {
-		return await keyTokenModel
-			.deleteOne({ _id: new Types.ObjectId(id) })
-			.lean();
-	};
-
-	static findByRefreshTokensUsed = async (refreshToken) => {
-		return await keyTokenModel
-			.findOne({ refreshTokensUsed: refreshToken })
-			.lean();
+		return await keyTokenModel.findOne({ user: userId }).lean();
 	};
 
 	static removeByUserId = async (userId) => {
 		return await keyTokenModel.deleteMany({ user: userId }).lean();
 	};
 
-	static findByRefreshToken = async (refreshToken) => {
-		return await keyTokenModel.findOne({ refreshToken });
+	static updateRefreshToken = async (userId, newRT, oldRT) => {
+		const filter = { user: userId };
+		const update = {
+			$set: { refreshToken: newRT },
+			$addToSet: { refreshTokensUsed: oldRT },
+		};
+		return await keyTokenModel.findOne(filter).updateOne(update);
 	};
 }
 
